@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/textFile">
+        <file>gameTextFile.txt</file>
+    </qresource>
+</RCC>
