@@ -31,35 +31,35 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     switch (level)
     {
     case 1: {
-        winTime = 90000;
+        winTime = 60000;
         enemyTime = 15000;
         enemyCount = 2;
         defenceType = 1;
         break;
     }
     case 2: {
-        winTime = 90000;
+        winTime = 60000;
         enemyTime = 20000;
         enemyCount = 3;
         defenceType = 2;
         break;
     }
     case 3: {
-        winTime = 90000;
+        winTime = 60000;
         enemyTime = 20000;
         enemyCount = 4;
         defenceType = 3;
         break;
     }
     case 4: {
-        winTime = 90000;
+        winTime = 60000;
         enemyTime = 15000;
         enemyCount = 3;
         defenceType = 2;
         break;
     }
     case 5: {
-        winTime = 90000;
+        winTime = 60000;
         enemyTime = 20000;
         enemyCount = 5;
         defenceType = 3;
