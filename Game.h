@@ -32,7 +32,7 @@ private:
     Defence* defence;
     bool started = false;
     int level;
-    int winTime;
+    int goal;
     int enemyTime;
     int enemyCount;
     int defenceType;

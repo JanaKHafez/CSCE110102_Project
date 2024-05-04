@@ -31,35 +31,35 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     switch (level)
     {
     case 1: {
-        winTime = 60000;
+        goal = 30;
         enemyTime = 15000;
         enemyCount = 2;
         defenceType = 1;
         break;
     }
     case 2: {
-        winTime = 60000;
+        goal = 30;
         enemyTime = 20000;
         enemyCount = 3;
         defenceType = 2;
         break;
     }
     case 3: {
-        winTime = 60000;
+        goal = 30;
         enemyTime = 20000;
         enemyCount = 4;
         defenceType = 3;
         break;
     }
     case 4: {
-        winTime = 60000;
+        goal = 30;
         enemyTime = 15000;
         enemyCount = 3;
         defenceType = 2;
         break;
     }
     case 5: {
-        winTime = 60000;
+        goal = 30;
         enemyTime = 20000;
         enemyCount = 5;
         defenceType = 3;
@@ -71,7 +71,7 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     winMsg = new QGraphicsTextItem(QString("You Win!!!"));loseMsg = new QGraphicsTextItem(QString("You Lose!"));
     enemyMsg = new QGraphicsTextItem(QString("Score: ") + QString::number(score));
     powerUpMsg = new QGraphicsTextItem(QString("Power Up!"));
-    if(level == 1) {startMsg = new QGraphicsTextItem(QString("Level ") + QString::number(level) + "\n" + QString("Press space to start"));}
+    if(level == 1) {startMsg = new QGraphicsTextItem(QString("Level ") + QString::number(level) + "\n" + QString("Goal: Kill ") + QString::number(goal) + QString(" enemies") + "\n" + QString("Press space to start"));}
     else {startMsg = new QGraphicsTextItem(QString("Level ") + QString::number(level -1) + QString(" Completed!") + "\n" + QString("Level ") + QString::number(level) + "\n" + QString("Press space to start"));}
 
     QFont fontBig;
@@ -213,9 +213,6 @@ void Game::keyPressEvent(QKeyEvent* event)
         {
             if(event->key()== Qt::Key_Space)
             {
-                QTimer* winTimer = new QTimer();
-                connect(winTimer, &QTimer::timeout, this, &Game::win);
-                winTimer->start(winTime);
                 started = true;
                 scene->removeItem(startMsg);
                 generateEnemy();
@@ -286,6 +283,10 @@ void Game::defeatEnemy(Enemy* e)
         scene->addItem(powerUpMsg);
         defence->increasePower(50);
         QTimer::singleShot(2000, qApp, [this](){ scene->removeItem(powerUpMsg); });
+    }
+    if(score >= goal)
+    {
+        win();
     }
     scene->removeItem(enemyMsg);
     enemyMsg->setPlainText(QString("Score: ") + QString::number(score));
