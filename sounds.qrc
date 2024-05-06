@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>powerUp.mp3</file>
+        <file>score.mp3</file>
+        <file>nextLevel.mp3</file>
+        <file>bullet.mp3</file>
+        <file>fenceDestroyed.mp3</file>
+        <file>Victory.mp3</file>
+        <file>incoming enemy.mp3</file>
+        <file>lose.mp3</file>
+    </qresource>
+</RCC>

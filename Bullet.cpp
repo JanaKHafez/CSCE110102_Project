@@ -4,7 +4,8 @@
 #include <QTimer>
 #include <QList>
 #include <cmath>
-
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include "Enemy.h"
 
 Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsRectItem()
@@ -30,6 +31,7 @@ void Bullet:: move()
             if (!e->damageThis(power))
             { specialEffect(e); }
             else {
+
                 delete this;
             }
             return;

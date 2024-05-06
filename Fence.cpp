@@ -1,5 +1,6 @@
 #include "Fence.h"
-
+#include <QMediaPlayer>
+#include <QAudioOutput>
 Fence::Fence(int thisX, int thisY)
 {
     x = thisX;
@@ -10,3 +11,8 @@ Fence::Fence(int thisX, int thisY)
     setBrush(grayBrush);
     setPos(x, y);
 }
+
+Fence::~Fence(){
+
+}
+

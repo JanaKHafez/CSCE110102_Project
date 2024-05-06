@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "qmediaplayer.h"
 #include <QGraphicsItem>
 #include <QFile>
 #include <QTextStream>

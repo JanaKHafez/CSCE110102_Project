@@ -2,6 +2,8 @@
 
 #include <QTimer>
 
+
+
 void Defence::rotateArrow()
 {
     L->setRotation(aim*-1*4.5);
@@ -52,7 +54,9 @@ void Defence::aimLeft(){
 
 void Defence::letShoot()
 {
-    if(!allowShoot) {allowShoot = true;}
+    if(!allowShoot) {
+        allowShoot = true;
+    }
     else
     {
         delete shootTimer;

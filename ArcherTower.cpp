@@ -1,6 +1,7 @@
 #include "ArcherTower.h"
 #include "Arrow.h"
 
+
 void ArcherTower::shoot()
 {
     if(allowShoot)
@@ -18,5 +19,6 @@ void ArcherTower::shoot()
         shootTimer = new QTimer();
         connect(shootTimer, &QTimer::timeout, this, &Defence::letShoot);
         shootTimer->start(1000);
+
     }
 }

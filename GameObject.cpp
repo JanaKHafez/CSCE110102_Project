@@ -1,4 +1,6 @@
 #include "GameObject.h"
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 GameObject::GameObject() {
     health = 100;
@@ -11,8 +13,13 @@ int GameObject::getY() {return y;}
 
 bool GameObject::isBroken()
 {
-    if(health <= 0) {return true;}
-    else {return false;}
+    if(health <= 0) {
+
+        return true;
+
+    }
+    else {
+        return false;}
 }
 
 bool GameObject::isFixed()
@@ -32,7 +39,9 @@ bool GameObject::damage(int amount)
         if(health <= 0)
         {
             breakObject();
+
             return true;
+
         }
         else {return false;}
     }
@@ -57,6 +66,14 @@ void GameObject::breakObject()
 {
     QBrush greenBrush(Qt::green);
     setBrush(greenBrush);
+    QMediaPlayer *fenceMedia;
+    QAudioOutput *fenceAudio;
+    fenceAudio= new QAudioOutput();
+    fenceAudio -> setVolume (50);
+    fenceMedia = new QMediaPlayer ();
+    fenceMedia->setAudioOutput(fenceAudio);
+    fenceMedia ->setSource(QUrl("qrc:/new/prefix1/fenceDestroyed.mp3"));
+    fenceMedia ->play();
     broken = true;
 }
 

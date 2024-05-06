@@ -8,6 +8,8 @@ class Fence: public GameObject {
 
 public:
     Fence(int thisX, int thisY);
+    ~Fence ();
+
 };
 
 #endif // FENCE_H
