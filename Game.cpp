@@ -33,7 +33,7 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     switch (level)
     {
     case 1: {
-        goal = 30;
+        goal = 20;
         enemyTime = 15000;
         enemyCount = 2;
         defenceType = 1;
@@ -194,6 +194,16 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
 }
 
 void Game::generateEnemy(){
+
+    QMediaPlayer *enemyMedia;
+    QAudioOutput *enemyAudio;
+    enemyAudio= new QAudioOutput();
+    enemyAudio -> setVolume (100);
+    enemyMedia = new QMediaPlayer ();
+    enemyMedia->setAudioOutput(enemyAudio);
+    enemyMedia ->setSource(QUrl("qrc:/new/prefix1/incoming enemy.mp3"));
+    enemyMedia ->play();
+
     Enemy* e;
     int randomX;
     int randomY;
@@ -269,25 +279,23 @@ void Game::gameOver()
 
 void Game::win()
 {
+    scene->addItem(winMsg);
+    QMediaPlayer *victoryMedia;
+    QAudioOutput *victoryAudio;
+    victoryAudio= new QAudioOutput();
+    victoryAudio -> setVolume (100);
+    victoryMedia = new QMediaPlayer ();
+    victoryMedia->setAudioOutput(victoryAudio);
+    victoryMedia ->setSource(QUrl("qrc:/new/prefix1/Victory.mp3"));
+    victoryMedia ->play();
+
     if(level < 5)
     {
         nextLevel();
-
     }
     else
     {
-        scene->addItem(winMsg);
         QTimer::singleShot(5000, qApp, &QApplication::quit);
-
-        QMediaPlayer *victoryMedia;
-        QAudioOutput *victoryAudio;
-        victoryAudio= new QAudioOutput();
-        victoryAudio -> setVolume (100);
-        victoryMedia = new QMediaPlayer ();
-        victoryMedia->setAudioOutput(victoryAudio);
-        victoryMedia ->setSource(QUrl("qrc:/new/prefix1/Victory.mp3"));
-        victoryMedia ->play();
-
     }
 }
 
@@ -312,7 +320,7 @@ void Game::defeatEnemy(Enemy* e)
     }
     if(score != 0 && score%10 == 0)
     {
-         scene->addItem(powerUpMsg);
+        scene->addItem(powerUpMsg);
         defence->increasePower(50);
         QTimer::singleShot(2000, qApp, [this](){ scene->removeItem(powerUpMsg); });
 
@@ -330,9 +338,11 @@ void Game::defeatEnemy(Enemy* e)
     {
         win();
     }
-    scene->removeItem(enemyMsg);
-    enemyMsg->setPlainText(QString("Score: ") + QString::number(score));
-    scene->addItem(enemyMsg);
+    else {
+        scene->removeItem(enemyMsg);
+        enemyMsg->setPlainText(QString("Score: ") + QString::number(score));
+        scene->addItem(enemyMsg);
+    }
 }
 
 void Game::nextLevel()

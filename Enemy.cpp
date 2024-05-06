@@ -1,8 +1,6 @@
 #include "Enemy.h"
 
 #include "CitizenWorker.h"
-#include <QMediaPlayer>
-#include <QAudioOutput>
 
 void Enemy::move()
 {
@@ -59,14 +57,6 @@ Enemy::Enemy(int thisX, int thisY, Game* game) : Player(thisX, thisY, game)
         connect(attackTimer, &QTimer::timeout, this, &Enemy::attackObject);
         attackTimer->start(1750);
         stepSize = 2;
-        QMediaPlayer *enemyMedia;
-        QAudioOutput *enemyAudio;
-        enemyAudio= new QAudioOutput();
-        enemyAudio -> setVolume (100);
-        enemyMedia = new QMediaPlayer ();
-        enemyMedia->setAudioOutput(enemyAudio);
-        enemyMedia ->setSource(QUrl("qrc:/new/prefix1/incoming enemy.mp3"));
-        enemyMedia ->play();
     }
 }
 

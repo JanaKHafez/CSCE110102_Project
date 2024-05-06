@@ -15,6 +15,15 @@ Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsR
     game = thisGame;
     power = thisPower;
 
+    QMediaPlayer *bulletMedia;
+    QAudioOutput *bulletOutput;
+    bulletOutput= new QAudioOutput();
+    bulletOutput -> setVolume (50);
+    bulletMedia = new QMediaPlayer ();
+    bulletMedia->setAudioOutput(bulletOutput);
+    bulletMedia ->setSource(QUrl("qrc:/new/prefix1/bullet.mp3"));
+    bulletMedia ->play();
+
     moveTimer = new QTimer();
     connect(moveTimer, SIGNAL(timeout()),this,SLOT (move()));
     moveTimer->start(10);
