@@ -38,11 +38,11 @@ void Enemy::move()
     else {reached = false;}
 }
 
-Enemy::Enemy(int thisX, int thisY, Game* game) : Player(thisX, thisY, game)
+Enemy::Enemy(int thisX, int thisY, int s, Game* game) : Player(thisX, thisY, game)
 {
     if(game != nullptr)
     {
-        speed = 10;
+        speed = s;
         color = Qt::red;
         QBrush brush(color);
         setRect(0, 0, 20, 20);
@@ -91,6 +91,11 @@ GameObject* Enemy::getNearest()
         }
     }
     return item;
+    //find shortest path to a clan castle:
+        //shortest path to every clan castle: HOW USING DIJKESTRA??
+            //Create graph
+        //find min
+    //return first item in path
 }
 
 bool Enemy::damageThis(float amount)

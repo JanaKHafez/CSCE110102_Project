@@ -28,16 +28,21 @@ private:
     QGraphicsTextItem* winMsg;
     QGraphicsTextItem* enemyMsg;
     QGraphicsTextItem* powerUpMsg;
-    int score;
-    int arrayOfMapN[10][10];
+    QGraphicsTextItem* countdownMsg;
     Defence* defence;
+    QTimer* countdownTimer;
+    QFile mapFile;
+    int arrayOfMapN[10][10];
     bool started = false;
+    bool freeze = true;
+    int score;
     int level;
-    int goal;
+    float goal;
     int enemyTime;
     int enemyCount;
     int defenceType;
-    bool freeze;
+    int enemySpeed;
+    int timePassed;
 
 public:
     Game(int level, QWidget *parent =0);
@@ -55,6 +60,7 @@ public:
 
 public slots:
     void generateEnemy();
+    void countdown();
 };
 
 #endif // GAME_H

@@ -20,7 +20,7 @@ public slots:
     void moveBack();
 
 public:
-    Enemy(int thisX, int thisY, Game* game);
+    Enemy(int thisX, int thisY, int speed, Game* game);
     void attackObject();
     bool damageThis(float amount);
     void knockBack(int angle);

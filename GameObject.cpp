@@ -39,9 +39,7 @@ bool GameObject::damage(int amount)
         if(health <= 0)
         {
             breakObject();
-
             return true;
-
         }
         else {return false;}
     }
