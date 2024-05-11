@@ -6,12 +6,10 @@
 #include <QTimer>
 #include <QWidget>
 #include <QDebug>
+#include <QGraphicsPixmapItem>
+#include <vector>
 #include "Game.h"
 #include "GameObject.h"
-#include<QGraphicsPixmapItem>
-#include<vector>
-
-
 
 class Player : public QObject, public QGraphicsPixmapItem {
 

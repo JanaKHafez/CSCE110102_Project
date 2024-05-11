@@ -1,6 +1,22 @@
 #include "WizardTower.h"
 #include "Potion.h"
 
+WizardTower::WizardTower(int x, int y, Game* game): Defence(x, y, game)
+{
+    QColor thisColor(93,68,122,255);
+    color = thisColor;
+}
+
+void WizardTower::DisplayPic()
+{
+    QGraphicsPixmapItem *item = new QGraphicsPixmapItem();
+    QPixmap pix = QPixmap(":/images/TOWER2.png");
+    QPixmap scaledPixmap = pix.scaled(80, 80);
+    item->setPixmap(scaledPixmap);
+    item->setPos(x, y);
+    scene()->addItem(item);
+}
+
 void WizardTower::shoot()
 {
     if(allowShoot)
@@ -11,7 +27,7 @@ void WizardTower::shoot()
         }
 
         Potion * potion = new Potion(aim, game, power);
-        potion->setPos(x+35,y+35);
+        potion->setPos(x-2,y+8);
         scene()->addItem(potion);
         allowShoot = false;
 

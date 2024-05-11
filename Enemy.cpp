@@ -2,6 +2,55 @@
 
 #include "CitizenWorker.h"
 
+Enemy::Enemy(int thisX, int thisY, int s, Game* game) : Player(thisX, thisY, game)
+{
+    if(game != nullptr)
+    {
+        stepSize = 2;
+        damage = 25;
+
+        enemyPhotos.push_back(pix2);
+        enemyPhotos.push_back(pix3);
+        enemyPhotos.push_back(pix4);
+        enemyPhotos.push_back(pix5);
+        enemyPhotos.push_back(pix6);
+        enemyPhotos.push_back(pix7);
+        enemyPhotos.push_back(pix8);
+
+        speed = s;
+        color = Qt::red;
+        QBrush brush(color);
+        QPixmap pix = QPixmap(":/images/enemyAnimation1.png");
+        QPixmap scaledPixmap = pix.scaled(120, 120);
+
+        setPixmap(scaledPixmap);
+        setPixmap(scaledPixmap);
+        setPos(x, y);
+
+        AnimationTimerStarted = true;
+        MoveAnimationTimer = new QTimer();
+        connect(MoveAnimationTimer, &QTimer::timeout, this, &Enemy::enemyMoveAnimation);
+        MoveAnimationTimer->start(120);
+
+        Player::updateItem();
+
+        moveTimer = new QTimer();
+        connect(moveTimer, &QTimer::timeout, this, &Enemy::move);
+        moveTimer->start(speed);
+
+        QTimer* attackTimer = new QTimer();
+        connect(attackTimer, &QTimer::timeout, this, &Enemy::attackObject);
+        attackTimer->start(1750);
+    }
+}
+
+void Enemy::enemyMoveAnimation()
+{
+    setPixmap(enemyPhotos[i]);
+    i++;
+    if(i >= 7){i=0;}
+}
+
 void Enemy::move()
 {
     if(toX != -1 && toY != -1)
@@ -36,51 +85,6 @@ void Enemy::move()
         }
     }
     else {reached = false;}
-}
-
-Enemy::Enemy(int thisX, int thisY, int s, Game* game) : Player(thisX, thisY, game)
-{
-    enemyPhotos.push_back(pix2);
-    enemyPhotos.push_back(pix3);
-    enemyPhotos.push_back(pix4);
-    enemyPhotos.push_back(pix5);
-    enemyPhotos.push_back(pix6);
-    enemyPhotos.push_back(pix7);
-    enemyPhotos.push_back(pix8);
-
-
-
-    if(game != nullptr)
-    {
-
-        speed = s;
-        color = Qt::red;
-        QBrush brush(color);
-        QPixmap pix = QPixmap(":/images/enemyAnimation1.png");
-        QPixmap scaledPixmap = pix.scaled(120, 120);
-
-        setPixmap(scaledPixmap);
-         setPixmap(scaledPixmap);
-        setPos(x, y);
-        damage = 25;
-
-            AnimationTimerStarted = true;
-            MoveAnimationTimer = new QTimer();
-            connect(MoveAnimationTimer, &QTimer::timeout, this, &Enemy::enemyMoveAnimation);
-            MoveAnimationTimer->start(120);
-
-
-
-
-        Player::updateItem();
-        moveTimer = new QTimer();
-        connect(moveTimer, &QTimer::timeout, this, &Enemy::move);
-        moveTimer->start(speed);
-        QTimer* attackTimer = new QTimer();
-        connect(attackTimer, &QTimer::timeout, this, &Enemy::attackObject);
-        attackTimer->start(1750);
-        stepSize = 2;
-    }
 }
 
 void Enemy::attackObject()
@@ -174,13 +178,6 @@ void Enemy::moveBack()
             moveTimer->start(speed);
         }
     }
-}
-
-void Enemy::enemyMoveAnimation()
-{
-    setPixmap(enemyPhotos[i]);
-    i++;
-    if(i >=8 ){i=0;}
 }
 
 Enemy::~Enemy()

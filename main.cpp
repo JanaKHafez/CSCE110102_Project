@@ -6,6 +6,7 @@
 
 Game *game;
 
+bool audio = true;
 int ClanCastle::castleCount = 0;
 
 int main(int argc, char *argv[])

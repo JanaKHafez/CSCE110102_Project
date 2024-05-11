@@ -15,6 +15,8 @@ ClanCastle::ClanCastle(int thisX, int thisY, Game* thisGame)
 
     QPixmap pix = QPixmap(":/images/file.png");
     QPixmap scaledPixmap = pix.scaled(80, 80);
+    photos.push_back(pix);
+
     setPixmap(scaledPixmap);
     setPos(x, y);
 

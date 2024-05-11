@@ -1,6 +1,7 @@
 #include "Fence.h"
 #include <QMediaPlayer>
 #include <QAudioOutput>
+
 Fence::Fence(int thisX, int thisY)
 {
     x = thisX;
@@ -11,6 +12,8 @@ Fence::Fence(int thisX, int thisY)
 
     QPixmap pix = QPixmap(":/images/file (1).png");
     QPixmap scaledPixmap = pix.scaled(80, 80);
+    photos.push_back(pix);
+
     setPixmap(scaledPixmap);
     setPos(x, y);
 

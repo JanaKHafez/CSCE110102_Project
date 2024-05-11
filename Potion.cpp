@@ -13,7 +13,6 @@ void Potion::specialEffect(Enemy* &e) {
 void Potion::damageEnemy()
 {
     count ++;
-    //NOT WORKING (SEG FAULT)
     if(count <= 3)
     {
         for(int i = 0; i < game->enemies.size(); i++)

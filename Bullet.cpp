@@ -6,34 +6,32 @@
 #include <cmath>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include "PowerUp.h"
 #include "Enemy.h"
-#include<vector>
 
 Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsPixmapItem()
 { /*std::vector<QGraphicsPixmapItem> photos;*/
 
-    QPixmap pix = QPixmap(":/images/firebullet (1) (2) (1).png");
-    QPixmap scaledPixmap = pix.scaled(50, 50);
-
-
-
+    QPixmap pix = QPixmap(":/images/circle.png");
+    QPixmap scaledPixmap = pix.scaled(120, 75);
     setPixmap(scaledPixmap);
-
     this->setVisible(true);
-
 
     aim = thisAim;
     game = thisGame;
     power = thisPower;
 
-    QMediaPlayer *bulletMedia;
-    QAudioOutput *bulletOutput;
-    bulletOutput= new QAudioOutput();
-    bulletOutput -> setVolume (50);
-    bulletMedia = new QMediaPlayer ();
-    bulletMedia->setAudioOutput(bulletOutput);
-    bulletMedia ->setSource(QUrl("qrc:/new/prefix1/bullet.mp3"));
-    bulletMedia ->play();
+    if(audio)
+    {
+        QMediaPlayer *bulletMedia;
+        QAudioOutput *bulletOutput;
+        bulletOutput= new QAudioOutput();
+        bulletOutput -> setVolume (50);
+        bulletMedia = new QMediaPlayer ();
+        bulletMedia->setAudioOutput(bulletOutput);
+        bulletMedia ->setSource(QUrl("qrc:/new/prefix1/bullet.mp3"));
+        bulletMedia ->play();
+    }
 
     moveTimer = new QTimer();
     connect(moveTimer, SIGNAL(timeout()),this,SLOT (move()));
@@ -42,9 +40,14 @@ Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsP
 
 void Bullet:: move()
 {
+    if(game->powerUp != nullptr && (x() + 25 >= game->powerUp->getX() && x() <= game->powerUp->getX() + 25) && (y() + 25 >= game->powerUp->getY() && y() <= game->powerUp->getY() + 25))
+    {
+        game->hitPowerUp();
+    }
+
     for(int i = 0; i < game->enemies.size(); i++)
     {
-        if((x() + 10 >= game->enemies[i]->getX() && x() <= game->enemies[i]->getX() + 20) && (y() + 10 >= game->enemies[i]->getY() && y() <= game->enemies[i]->getY() + 20))
+        if((x() + 25 >= game->enemies[i]->getX() && x() <= game->enemies[i]->getX() + 50) && (y() + 25 >= game->enemies[i]->getY() && y() <= game->enemies[i]->getY() + 50))
         {
             scene()->removeItem(this);
             Enemy* e = game->enemies[i];

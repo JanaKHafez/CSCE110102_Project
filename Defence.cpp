@@ -1,5 +1,7 @@
 #include "Defence.h"
 
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include <QTimer>
 
 
@@ -19,9 +21,6 @@ Defence::Defence (int thisX, int thisY, Game* thisGame)
     x = thisX;
     y = thisY;
     type = 2;
-    color = Qt::blue;
-    QBrush blueBrush(color);
-     //setPixmap(QPixmap(":/../../Downloads/citzen.jpeg"));
     setPos(x, y);
     L = new QGraphicsLineItem();
 }
@@ -30,8 +29,8 @@ void Defence::DisplayArrow()
 {
     L->setLine(x+40, y, x+40, y+80);
     L->setTransformOriginPoint(x+40, y+40);
-    QPen pen(Qt::red);
-    pen.setWidth(10);
+    QPen pen(color);
+    pen.setWidth(5);
     L->setPen(pen);
     scene()->addItem(L);
 }
@@ -39,7 +38,7 @@ void Defence::DisplayArrow()
 void Defence::aimRight(){
     if(aim < 20)
     {
-        aim += 1;
+        aim += 0.5;
         rotateArrow();
     }
 }
@@ -47,7 +46,7 @@ void Defence::aimRight(){
 void Defence::aimLeft(){
     if(aim > -20)
     {
-        aim += -1;
+        aim += -0.5;
         rotateArrow();
     }
 }
@@ -64,7 +63,19 @@ void Defence::letShoot()
     }
 }
 
-void Defence::increasePower(int p)
+void Defence::increasePower(float p)
 {
+    if(audio)
+    {
+        QMediaPlayer *powerUpMedia;
+        QAudioOutput *powerUpAudio;
+        powerUpAudio= new QAudioOutput();
+        powerUpAudio -> setVolume (100);
+        powerUpMedia = new QMediaPlayer ();
+        powerUpMedia->setAudioOutput(powerUpAudio);
+        powerUpMedia ->setSource(QUrl("qrc:/new/prefix1/powerUp.mp3"));
+        powerUpMedia ->play();
+    }
+
     power += power*(p/100);
 }

@@ -10,26 +10,21 @@ private:
     QColor color;
     int speed;
     int angle;
+    int i=0;
     int moveBackCounter;
+    bool AnimationTimerStarted = false;
+    std::vector<QPixmap> enemyPhotos;
     QTimer* moveTimer;
     QTimer* knockBackTimer;
-     QTimer* MoveAnimationTimer;
-    int i=0;
-     std::vector<QPixmap> enemyPhotos;
-     bool AnimationTimerStarted = false;
+    QTimer* MoveAnimationTimer;
 
-
-
-     QPixmap pix2 = QPixmap(":/images/enemyAnimation1.png").scaled(80,80);
-     QPixmap pix3 = QPixmap(":/images/enemyAnimation2.png").scaled(80,80);
-     QPixmap pix4 = QPixmap(":/images/enemyAnimation3.png").scaled(80,80);
-     QPixmap pix5 = QPixmap(":/images/enemyAnimation4.png").scaled(80,80);
-     QPixmap pix6 = QPixmap(":/images/enemyAnimation5.png").scaled(80,80);
-     QPixmap pix7 = QPixmap(":/images/enemyAnimation6.png").scaled(80,80);
-     QPixmap pix8 = QPixmap(":/images/enemyAnimation7.png").scaled(80,80);
-
-
-
+    QPixmap pix2 = QPixmap(":/images/enemyAnimation1.png").scaled(80,80);
+    QPixmap pix3 = QPixmap(":/images/enemyAnimation2.png").scaled(80,80);
+    QPixmap pix4 = QPixmap(":/images/enemyAnimation3.png").scaled(80,80);
+    QPixmap pix5 = QPixmap(":/images/enemyAnimation4.png").scaled(80,80);
+    QPixmap pix6 = QPixmap(":/images/enemyAnimation5.png").scaled(80,80);
+    QPixmap pix7 = QPixmap(":/images/enemyAnimation6.png").scaled(80,80);
+    QPixmap pix8 = QPixmap(":/images/enemyAnimation7.png").scaled(80,80);
 
 public slots:
     void move();

@@ -7,10 +7,10 @@
 
 
 class Defence: public GameObject {
-
+Q_OBJECT
 protected:
-    int aim;
-    int power;
+    float aim;
+    float power;
     QGraphicsLineItem* L;
     void rotateArrow();
     Game* game;
@@ -21,9 +21,10 @@ public:
     Defence (int thisX, int thisY, Game* game);
     void DisplayArrow();
     virtual void shoot() = 0;
+    virtual void DisplayPic() = 0;
     void aimRight();
     void aimLeft();
-    void increasePower(int percentage);
+    void increasePower(float percentage);
 
 public slots:
     void letShoot();

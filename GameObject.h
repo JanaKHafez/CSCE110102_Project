@@ -13,6 +13,7 @@
 #include <QTimer>
 #include<QGraphicsPixmapItem>
 
+extern bool audio;
 
 class GameObject: public QObject, public QGraphicsPixmapItem{
 
