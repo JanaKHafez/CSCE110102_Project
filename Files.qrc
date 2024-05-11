@@ -4,4 +4,25 @@
         <file>gameTextFile2.txt</file>
         <file>gameTextFile3.txt</file>
     </qresource>
+    <qresource prefix="/images">
+        <file>greenland.jpeg</file>
+        <file>newcastle.jpeg</file>
+        <file>newgoblet.png</file>
+        <file>citzen (1) (1).png</file>
+        <file>firebullet (1) (2) (1).png</file>
+        <file>file (1).png</file>
+        <file>file.png</file>
+        <file>canonball.jpg</file>
+        <file>sounds.qrc</file>
+        <file>circle.tif</file>
+        <file>circle.png</file>
+        <file>file (2).png</file>
+        <file>audioOFF.png</file>
+        <file>audioOn.png</file>
+        <file>restartButton.png</file>
+        <file>canon.png</file>
+        <file>TOWER1.png</file>
+        <file>TOWER2.png</file>
+        <file>TOWER3.png</file>
+    </qresource>
 </RCC>

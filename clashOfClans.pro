@@ -23,10 +23,10 @@ SOURCES += \
     GameObject.cpp \
     Player.cpp \
     Potion.cpp \
+    PowerUp.cpp \
     WizardTower.cpp \
     main.cpp \
-    mainwindow.cpp \
-    powerup.cpp
+    mainwindow.cpp
 
 HEADERS += \
     ArcherTower.h \
@@ -42,9 +42,9 @@ HEADERS += \
     GameObject.h \
     Player.h \
     Potion.h \
+    PowerUp.h \
     WizardTower.h \
-    mainwindow.h \
-    powerup.h
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui
@@ -56,5 +56,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Files.qrc \
-    images.qrc \
     sounds.qrc

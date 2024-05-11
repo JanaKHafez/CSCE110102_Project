@@ -1,4 +1,5 @@
 #include "Defence.h"
+
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include <QTimer>
@@ -20,9 +21,6 @@ Defence::Defence (int thisX, int thisY, Game* thisGame)
     x = thisX;
     y = thisY;
     type = 2;
-    color = Qt::blue;
-    QBrush blueBrush(color);
-    setBrush(blueBrush);
     setPos(x, y);
     L = new QGraphicsLineItem();
 }
@@ -31,8 +29,8 @@ void Defence::DisplayArrow()
 {
     L->setLine(x+40, y, x+40, y+80);
     L->setTransformOriginPoint(x+40, y+40);
-    QPen pen(Qt::red);
-    pen.setWidth(10);
+    QPen pen(color);
+    pen.setWidth(5);
     L->setPen(pen);
     scene()->addItem(L);
 }

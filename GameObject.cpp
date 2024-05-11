@@ -4,7 +4,7 @@
 
 GameObject::GameObject() {
     health = 100;
-    setRect(0, 0, 80, 80);
+    setScale(1);
     broken = false;
 }
 
@@ -35,7 +35,7 @@ bool GameObject::damage(int amount)
         health = health - amount;
         color = color.darker(amount*5);
         QBrush newBrush(color);
-        setBrush(newBrush);
+         //setPixmap(QPixmap(":/../../Downloads/citzen.jpeg"));
         if(health <= 0)
         {
             breakObject();
@@ -53,7 +53,7 @@ bool GameObject::repair(int amount)
         health += amount;
         color = color.lighter(amount*5);
         QBrush newBrush(color);
-        setBrush(newBrush);
+        //setPixmap(QPixmap(":/../../Downloads/citzen.jpeg"));
         if(health > 100) {health = 100; return true;}
         return false;
     }
@@ -62,9 +62,11 @@ bool GameObject::repair(int amount)
 
 void GameObject::breakObject()
 {
+    QPixmap pix = QPixmap(":/images/greenland.jpeg");
+    QPixmap scaledPixmap = pix.scaled(80, 80);
+    setPixmap(scaledPixmap);
     QBrush greenBrush(Qt::green);
-    setBrush(greenBrush);
-    broken = true;
+    //setPixmap(QPixmap(":/../../Downloads/citzen.jpeg"));
 
     if(audio)
     {
@@ -77,6 +79,7 @@ void GameObject::breakObject()
         fenceMedia ->setSource(QUrl("qrc:/new/prefix1/fenceDestroyed.mp3"));
         fenceMedia ->play();
     }
+    broken = true;
 }
 
 int GameObject::getType() {return type;}

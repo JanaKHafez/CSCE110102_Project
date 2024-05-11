@@ -20,12 +20,13 @@
 #include "WizardTower.h"
 #include "Fence.h"
 #include "CitizenWorker.h"
-#include "powerup.h"
+#include "PowerUp.h"
 
 extern Game* game;
 
 Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
 
+    powerUp = nullptr;
     score = 0;
     timePassed = 0;
     ClanCastle::castleCount = 0;
@@ -62,8 +63,8 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
         break;
     }
     case 4: {
-        goal = 1.5;
-        enemyTime = 12500;
+        goal = 1;
+        enemyTime = 15000;
         enemyCount = 3;
         defenceType = 2;
         enemySpeed = 10;
@@ -71,15 +72,14 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
         break;
     }
     case 5: {
-        goal = 1.5;
-        enemyTime = 15000;
+        goal = 1;
+        enemyTime = 20000;
         enemyCount = 5;
         defenceType = 3;
         enemySpeed = 10;
         mapFile.setFileName(":/textFile/gameTextFile2.txt");
         break;
     }
-
     }
 
     winMsg = new QGraphicsTextItem(QString("You Win!!!"));
@@ -87,8 +87,6 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     enemyMsg = new QGraphicsTextItem(QString("Score: ") + QString::number(score));
     powerUpMsg = new QGraphicsTextItem(QString("Power Up!"));
     countdownMsg = new QGraphicsTextItem(QString(""));
-    audioMsg = new QGraphicsTextItem(QString("Audio OFF"));
-    restartMsg = new QGraphicsTextItem(QString("Restart"));
     if(level == 1) {startMsg = new QGraphicsTextItem(QString("Level ") + QString::number(level) + "\n" + QString("Survive for ") + QString::number(goal*60) + QString(" seconds") + "\n" + QString("Press space to start"));}
     else {startMsg = new QGraphicsTextItem(QString("Level ") + QString::number(level -1) + QString(" Completed!"));}
 
@@ -122,14 +120,6 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     powerUpMsg -> setFont(fontBig);
     powerUpMsg -> setDefaultTextColor(colorWhite);
     powerUpMsg -> setPos(200, 500);
-
-    audioMsg -> setFont(fontSmall);
-    audioMsg -> setDefaultTextColor(colorWhite);
-    audioMsg -> setPos(695, 30);
-
-    restartMsg -> setFont(fontSmall);
-    restartMsg -> setDefaultTextColor(colorWhite);
-    restartMsg -> setPos(725, 0);
 
     setFixedSize(800, 800);
 
@@ -168,11 +158,20 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
         for (int j = 0; j < 10; j++) {
             switch (arrayOfMapN[i][j]) {
             case 0: { //empty land
-                QGraphicsRectItem* item = new QGraphicsRectItem(j * 80, i * 80, 80, 80);
-                QBrush greenBrush(Qt::green);
-                item->setBrush(greenBrush);
-                scene->addItem(item);
-                break;
+
+               // QGraphicsRectItem* item = new QGraphicsRectItem(j * 80, i * 80, 80, 80);
+               //QBrush greenBrush(Qt::green);
+               //item->setBrush(greenBrush);
+               //item->setVisible(true);
+
+               QGraphicsPixmapItem *item = new QGraphicsPixmapItem();
+               QPixmap pix = QPixmap(":/images/greenland.jpeg");
+               QPixmap scaledPixmap = pix.scaled(80, 80);
+               item->setPixmap(scaledPixmap);
+               item->setPos(j * 80, i * 80);
+               scene->addItem(item);
+
+               break;
             }
             case 1: { //clan castle
                 ClanCastle* c = new ClanCastle(j*80, i*80, this); // const
@@ -181,6 +180,14 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
                 break;
             }
             case 2: { //defence unit
+
+                QGraphicsPixmapItem *item = new QGraphicsPixmapItem();
+                QPixmap pix = QPixmap(":/images/greenland.jpeg");
+                QPixmap scaledPixmap = pix.scaled(80, 80);
+                item->setPixmap(scaledPixmap);
+                item->setPos(j * 80, i * 80);
+                scene->addItem(item);
+
                 Defence *d;
                 switch (defenceType)
                 {
@@ -198,6 +205,7 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
                 }
                 }
                 scene->addItem(d);
+                d->DisplayPic();
                 d->DisplayArrow();
                 map.push_back(d);
                 defence = d;
@@ -216,8 +224,27 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     }
 
     scene -> addItem(startMsg);
-    scene -> addItem(audioMsg);
-    scene -> addItem(restartMsg);
+
+    audioPicON = new QGraphicsPixmapItem();
+    QPixmap audioPixON = QPixmap(":/images/audioOn.png");
+    QPixmap scaledPixmapAudioON = audioPixON.scaled(60, 80);
+    audioPicON->setPixmap(scaledPixmapAudioON);
+    audioPicON->setPos(660, 0);
+
+    audioPicOFF = new QGraphicsPixmapItem();
+    QPixmap audioPixOFF = QPixmap(":/images/audioOFF.png");
+    QPixmap scaledPixmapAudioOFF = audioPixOFF.scaled(70, 80);
+    audioPicOFF->setPixmap(scaledPixmapAudioOFF);
+    audioPicOFF->setPos(660, 0);
+
+    scene->addItem(audioPicON);
+
+    QGraphicsPixmapItem *restartPic = new QGraphicsPixmapItem();
+    QPixmap restartPix = QPixmap(":/images/restartButton.png");
+    QPixmap scaledPixmapRestart = restartPix.scaled(40, 40);
+    restartPic->setPixmap(scaledPixmapRestart);
+    restartPic->setPos(740, 20);
+    scene->addItem(restartPic);
 
     if(level > 1) {QTimer::singleShot(2500, qApp, [this](){
             freeze = false;
@@ -228,6 +255,42 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     else {freeze = false;}
 }
 
+void Game::mousePressEvent(QMouseEvent* event)
+{
+    QPointF mousePoint = event->pos();
+    qreal x = mousePoint.x();
+    qreal y = mousePoint.y();
+
+    if(x >= 670 && x <= 715 && y >= 15 && y <= 60)
+    {
+        if(audio == true)
+        {
+            audio = false;
+            scene->removeItem(audioPicON);
+            scene->addItem(audioPicOFF);
+        }
+        else
+        {
+            audio = true;
+            scene->removeItem(audioPicOFF);
+            scene->addItem(audioPicON);
+        }
+    }
+
+    else if(x >= 740 && x <= 780 && y <= 55 && y >= 20)
+    {
+        restart();
+    }
+}
+
+void Game::restart()
+{
+    delete this;
+    game = new Game(1);
+    game->show();
+    game->setFocus();
+}
+
 void Game::keyPressEvent(QKeyEvent* event)
 {
     if(!freeze)
@@ -236,8 +299,6 @@ void Game::keyPressEvent(QKeyEvent* event)
         {
             if(event->key()== Qt::Key_Space)
             {
-                powerUp = nullptr;
-
                 started = true;
                 scene->removeItem(startMsg);
 
@@ -246,13 +307,13 @@ void Game::keyPressEvent(QKeyEvent* event)
                 connect(EnemyTimer, &QTimer::timeout, this, &Game::generateEnemy);
                 EnemyTimer->start(enemyTime);
 
-                QTimer* powerUpTimer = new QTimer();
-                connect(powerUpTimer, &QTimer::timeout, this, &Game::generatePowerUp);
-                powerUpTimer->start(30000);
-
                 countdownTimer = new QTimer();
                 connect(countdownTimer, &QTimer::timeout, this, &Game::countdown);
                 countdownTimer->start(1000);
+
+                QTimer* powerUpTimer = new QTimer();
+                connect(powerUpTimer, &QTimer::timeout, this, &Game::generatePowerUp);
+                powerUpTimer->start(30000);
 
                 for(int i = 0; i < 5; i++)
                 {
@@ -284,36 +345,6 @@ void Game::keyPressEvent(QKeyEvent* event)
     }
 }
 
-void Game::mousePressEvent(QMouseEvent* event)
-{
-    QPointF mousePoint = event->pos();
-    qreal x = mousePoint.x();
-    qreal y = mousePoint.y();
-
-     if(x >= 695 && x <= 800 && y <= 60 && y >= 35)
-    {
-        if(audio == true)
-        {
-            audio = false;
-            scene->removeItem(audioMsg);
-            audioMsg->setPlainText(QString("Audio ON"));
-            scene->addItem(audioMsg);
-        }
-        else
-        {
-            audio = true;
-            scene->removeItem(audioMsg);
-            audioMsg->setPlainText(QString("Audio OFF"));
-            scene->addItem(audioMsg);
-        }
-    }
-
-    else if(x >= 730 && x <= 800 && y <= 30 && y >= 10)
-    {
-        restart();
-    }
-}
-
 void Game::generatePowerUp()
 {
     PowerUp * p;
@@ -324,14 +355,6 @@ void Game::generatePowerUp()
     p = new PowerUp (this, randX, randY);
     powerUp = p;
     scene->addItem(p);
-}
-
-void Game::restart()
-{
-    delete this;
-    game = new Game(1);
-    game->show();
-    game->setFocus();
 }
 
 void Game::generateEnemy(){
@@ -382,6 +405,8 @@ void Game::gameOver()
 
 void Game::win()
 {
+    scene->addItem(winMsg);
+
     if(audio)
     {
         scene->addItem(winMsg);

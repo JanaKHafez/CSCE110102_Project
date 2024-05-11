@@ -6,13 +6,17 @@
 #include <cmath>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include "PowerUp.h"
 #include "Enemy.h"
-#include "powerup.h"
-#include "Defence.h"
 
-Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsRectItem()
-{
-    setRect(0, 0, 10, 10);
+Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsPixmapItem()
+{ /*std::vector<QGraphicsPixmapItem> photos;*/
+
+    QPixmap pix = QPixmap(":/images/circle.png");
+    QPixmap scaledPixmap = pix.scaled(120, 75);
+    setPixmap(scaledPixmap);
+    this->setVisible(true);
+
     aim = thisAim;
     game = thisGame;
     power = thisPower;
@@ -36,13 +40,14 @@ Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsR
 
 void Bullet:: move()
 {
-    if(game->powerUp != nullptr && (x() + 10 >= game->powerUp->getX() && x() <= game->powerUp->getX() + 20) && (y() + 10 >= game->powerUp->getY() && y() <= game->powerUp->getY() + 20))
+    if(game->powerUp != nullptr && (x() + 25 >= game->powerUp->getX() && x() <= game->powerUp->getX() + 25) && (y() + 25 >= game->powerUp->getY() && y() <= game->powerUp->getY() + 25))
     {
         game->hitPowerUp();
     }
+
     for(int i = 0; i < game->enemies.size(); i++)
     {
-        if((x() + 10 >= game->enemies[i]->getX() && x() <= game->enemies[i]->getX() + 20) && (y() + 10 >= game->enemies[i]->getY() && y() <= game->enemies[i]->getY() + 20))
+        if((x() + 25 >= game->enemies[i]->getX() && x() <= game->enemies[i]->getX() + 50) && (y() + 25 >= game->enemies[i]->getY() && y() <= game->enemies[i]->getY() + 50))
         {
             scene()->removeItem(this);
             Enemy* e = game->enemies[i];

@@ -15,6 +15,7 @@
 #include <QGraphicsLineItem>
 #include <QTimer>
 #include <QGraphicsView>
+#include <QGraphicsPixmapItem>
 
 class Defence;
 class GameObject;
@@ -33,8 +34,8 @@ private:
     QGraphicsTextItem* enemyMsg;
     QGraphicsTextItem* powerUpMsg;
     QGraphicsTextItem* countdownMsg;
-    QGraphicsTextItem* audioMsg;
-    QGraphicsTextItem* restartMsg;
+    QGraphicsPixmapItem* audioPicON;
+    QGraphicsPixmapItem* audioPicOFF;
     QTimer* countdownTimer;
     QFile mapFile;
     int arrayOfMapN[10][10];
@@ -48,7 +49,6 @@ private:
     int defenceType;
     int enemySpeed;
     int timePassed;
-
 
 public:
     Defence* defence;

@@ -2,13 +2,12 @@
 #define DEFENCE_H
 
 #include <qstring.h>
+#include "Game.h"
 #include "GameObject.h"
-#include "powerUp.h"
 
-class Game;
 
 class Defence: public GameObject {
-
+Q_OBJECT
 protected:
     float aim;
     float power;
@@ -22,6 +21,7 @@ public:
     Defence (int thisX, int thisY, Game* game);
     void DisplayArrow();
     virtual void shoot() = 0;
+    virtual void DisplayPic() = 0;
     void aimRight();
     void aimLeft();
     void increasePower(float percentage);

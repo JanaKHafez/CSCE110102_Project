@@ -2,6 +2,7 @@
 
 Player::Player(int thisX, int thisY, Game* thisGame)
 {
+
     health = 100;
     x = thisX;
     y = thisY;
