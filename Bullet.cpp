@@ -7,10 +7,21 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include "Enemy.h"
+#include<vector>
 
-Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsRectItem()
-{
-    setRect(0, 0, 10, 10);
+Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsPixmapItem()
+{ /*std::vector<QGraphicsPixmapItem> photos;*/
+
+    QPixmap pix = QPixmap(":/images/firebullet (1) (2) (1).png");
+    QPixmap scaledPixmap = pix.scaled(50, 50);
+
+
+
+    setPixmap(scaledPixmap);
+
+    this->setVisible(true);
+
+
     aim = thisAim;
     game = thisGame;
     power = thisPower;

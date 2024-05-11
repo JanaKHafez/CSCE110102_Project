@@ -21,7 +21,7 @@ Defence::Defence (int thisX, int thisY, Game* thisGame)
     type = 2;
     color = Qt::blue;
     QBrush blueBrush(color);
-    setBrush(blueBrush);
+     //setPixmap(QPixmap(":/../../Downloads/citzen.jpeg"));
     setPos(x, y);
     L = new QGraphicsLineItem();
 }

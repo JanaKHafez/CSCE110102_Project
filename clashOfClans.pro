@@ -54,5 +54,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     Files.qrc \
-    images.qrc \
     sounds.qrc

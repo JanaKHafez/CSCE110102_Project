@@ -2,4 +2,13 @@
     <qresource prefix="/textFile">
         <file>gameTextFile.txt</file>
     </qresource>
+    <qresource prefix="/images">
+        <file>greenland.jpeg</file>
+        <file>newcastle.jpeg</file>
+        <file>newgoblet.png</file>
+        <file>citzen (1) (1).png</file>
+        <file>firebullet (1) (2) (1).png</file>
+        <file>file (1).png</file>
+        <file>file.png</file>
+    </qresource>
 </RCC>

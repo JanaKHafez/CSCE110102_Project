@@ -5,8 +5,9 @@
 #include <QObject>
 
 #include "Game.h"
+#include<QGraphicsPixmapItem>
 
-class Bullet: public QObject, public QGraphicsRectItem {
+class Bullet: public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
 
 protected:

@@ -27,9 +27,13 @@ void CitizenWorker::move()
 CitizenWorker::CitizenWorker(int thisX, int thisY, Game* game) : Player(thisX, thisY, game)
 {
 
-    QBrush whiteBrush(Qt::white);
-    setRect(0, 0, 20, 20);
-    setBrush(whiteBrush);
+
+
+    // QBrush whiteBrush(Qt::white);
+
+    QPixmap pix = QPixmap(":/images/citzen (1) (1).png");
+    QPixmap scaledPixmap = pix.scaled(50, 50);
+    setPixmap(scaledPixmap);
     setPos(x, y);
     repair = 25;
     QTimer* timerMove = new QTimer();

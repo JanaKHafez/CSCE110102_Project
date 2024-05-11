@@ -8,9 +8,11 @@
 #include <QDebug>
 #include "Game.h"
 #include "GameObject.h"
+#include<QGraphicsPixmapItem>
 
 
-class Player : public QObject, public QGraphicsRectItem {
+
+class Player : public QObject, public QGraphicsPixmapItem {
 
 protected:
     float health;

@@ -20,6 +20,7 @@
 #include "WizardTower.h"
 #include "Fence.h"
 #include "CitizenWorker.h"
+#include<QGraphicsPixmapItem>
 
 extern Game* game;
 
@@ -156,10 +157,23 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
         for (int j = 0; j < 10; j++) {
             switch (arrayOfMapN[i][j]) {
             case 0: { //empty land
-                QGraphicsRectItem* item = new QGraphicsRectItem(j * 80, i * 80, 80, 80);
-                QBrush greenBrush(Qt::green);
-                item->setBrush(greenBrush);
-                scene->addItem(item);
+
+               // QGraphicsRectItem* item = new QGraphicsRectItem(j * 80, i * 80, 80, 80);
+                //QBrush greenBrush(Qt::green);
+               //item->setBrush(greenBrush);
+               QGraphicsPixmapItem *item = new QGraphicsPixmapItem();
+
+               QPixmap pix = QPixmap(":/images/greenland.jpeg");
+               QPixmap scaledPixmap = pix.scaled(80, 80);
+               item->setPixmap(scaledPixmap);
+               item->setPos(j * 80, i * 80);
+
+
+               //item->setVisible(true);
+
+               scene->addItem(item);
+
+
                 break;
             }
             case 1: { //clan castle
