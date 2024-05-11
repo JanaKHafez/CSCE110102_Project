@@ -1,21 +1,6 @@
 #include "ArcherTower.h"
 #include "Arrow.h"
 
-ArcherTower::ArcherTower(int x, int y, Game* game) : Defence(x, y, game)
-{
-    QColor thisColor(244,235,213,255);
-    color = thisColor;
-}
-
-void ArcherTower::DisplayPic()
-{
-    QGraphicsPixmapItem *item = new QGraphicsPixmapItem();
-    QPixmap pix = QPixmap(":/images/TOWER3.png");
-    QPixmap scaledPixmap = pix.scaled(80, 80);
-    item->setPixmap(scaledPixmap);
-    item->setPos(x, y);
-    scene()->addItem(item);
-}
 
 void ArcherTower::shoot()
 {
@@ -27,7 +12,7 @@ void ArcherTower::shoot()
         }
 
         Arrow * arrow = new Arrow(aim, game, power);
-        arrow->setPos(x-2,y+8);
+        arrow->setPos(x+35,y+35);
         scene()->addItem(arrow);
         allowShoot = false;
 

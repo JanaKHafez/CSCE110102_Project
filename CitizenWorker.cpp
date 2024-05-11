@@ -1,7 +1,10 @@
 #include "CitizenWorker.h"
 
+
 void CitizenWorker::move()
 {
+
+
     if(toX != -1 && toY != -1)
     {
         reached = true;
@@ -10,6 +13,7 @@ void CitizenWorker::move()
             if(y > toY) {y += stepSize * -1;}
             else {y += stepSize;}
             reached = false;
+
         }
 
         if(abs(x-toX) >= stepSize)
@@ -24,8 +28,35 @@ void CitizenWorker::move()
     else {reached = false;}
 }
 
+void CitizenWorker::moveAnimation()
+{
+
+    setPixmap(photos[i]);
+    i++;
+    if(i >=7 ){i=0;}
+}
+
+void CitizenWorker::repairAnimation()
+{
+    setPixmap(repairPhotos[j]);
+    j++;
+    if(j >=5 ){j=0;}
+}
+
+
+
 CitizenWorker::CitizenWorker(int thisX, int thisY, Game* game) : Player(thisX, thisY, game)
 {
+    photos.push_back(pix2);
+    photos.push_back(pix3);
+    photos.push_back(pix4);
+    photos.push_back(pix5);
+    photos.push_back(pix6);
+    photos.push_back(pix7);
+    repairPhotos.push_back(pix8);
+    repairPhotos.push_back(pix9);
+    repairPhotos.push_back(pix10);
+    repairPhotos.push_back(pix11);
 
 
 
@@ -39,7 +70,7 @@ CitizenWorker::CitizenWorker(int thisX, int thisY, Game* game) : Player(thisX, t
     QTimer* timerMove = new QTimer();
     updateItem();
     connect(timerMove, &QTimer::timeout, this, &CitizenWorker::move);
-    timerMove->start(50);
+    timerMove->start(100);
     QTimer* timerRepair = new QTimer();
     connect(timerRepair, &QTimer::timeout, this, &CitizenWorker::repairObject);
     timerRepair->start(1000);
@@ -60,12 +91,22 @@ GameObject* CitizenWorker::getNearest()
             int Xdiff = abs(x - thisX);
             int Ydiff = abs(y - thisY);
             thisDiff = Xdiff + Ydiff;
+
             if(thisDiff < minDiff)
             {
                 minDiff = thisDiff;
                 item = (game->map)[i];
             }
         }
+    }
+
+    if(item != nullptr && reached == false && !AnimationTimerStarted)
+    {
+        AnimationTimerStarted = true;
+         ti = new QTimer();
+         connect(ti, &QTimer::timeout, this, &CitizenWorker::moveAnimation);
+         ti->start(100);
+
     }
     return item;
 }
@@ -75,7 +116,20 @@ void CitizenWorker::repairObject()
     Player::updateItem();
     if(reached && item != nullptr)
     {
+
+        if(AnimationTimerStarted)
+        {
+            delete ti;
+            AnimationTimerStarted = false;
+        }
+
+
         item->repair(repair);
+        repairTimerAnimation = new QTimer();
+        connect(repairTimerAnimation, &QTimer::timeout, this, &CitizenWorker::repairAnimation);
+        repairTimerAnimation->start(100);
+
+
     }
 }
 

@@ -13,7 +13,6 @@
 #include <QTimer>
 #include<QGraphicsPixmapItem>
 
-extern bool audio;
 
 class GameObject: public QObject, public QGraphicsPixmapItem{
 
@@ -24,6 +23,7 @@ protected:
     int type;
     bool broken;
     QColor color;
+    std::vector<QPixmap> photos;
 
 public:
     GameObject();

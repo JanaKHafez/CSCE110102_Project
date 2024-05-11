@@ -23,7 +23,6 @@ SOURCES += \
     GameObject.cpp \
     Player.cpp \
     Potion.cpp \
-    PowerUp.cpp \
     WizardTower.cpp \
     main.cpp \
     mainwindow.cpp
@@ -42,7 +41,6 @@ HEADERS += \
     GameObject.h \
     Player.h \
     Potion.h \
-    PowerUp.h \
     WizardTower.h \
     mainwindow.h
 

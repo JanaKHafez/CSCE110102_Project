@@ -1,8 +1,10 @@
 <RCC>
     <qresource prefix="/textFile">
         <file>gameTextFile.txt</file>
-        <file>gameTextFile2.txt</file>
-        <file>gameTextFile3.txt</file>
+        <file>citzenWorkerRepairAnimation1.png</file>
+        <file>citzenWorkerRepairAnimation2.png</file>
+        <file>citzenWorkerRepairAnimation3.png</file>
+        <file>citzenWorkerRepairAnimation4.png</file>
     </qresource>
     <qresource prefix="/images">
         <file>greenland.jpeg</file>
@@ -12,17 +14,25 @@
         <file>firebullet (1) (2) (1).png</file>
         <file>file (1).png</file>
         <file>file.png</file>
-        <file>canonball.jpg</file>
-        <file>sounds.qrc</file>
-        <file>circle.tif</file>
-        <file>circle.png</file>
-        <file>file (2).png</file>
-        <file>audioOFF.png</file>
-        <file>audioOn.png</file>
-        <file>restartButton.png</file>
-        <file>canon.png</file>
-        <file>TOWER1.png</file>
-        <file>TOWER2.png</file>
-        <file>TOWER3.png</file>
+        <file>file (3).png</file>
+        <file>citzenMoveanimation1.png</file>
+        <file>citzenMoveanimation2.png</file>
+        <file>citzenMoveanimation3.png</file>
+        <file>citzenMoveanimation4.png</file>
+        <file>citzenMoveanimation5.png</file>
+        <file>6.png</file>
+        <file>enemyAnimation1.png</file>
+        <file>enemyAnimation2.png</file>
+        <file>enemyAnimation3.png</file>
+        <file>enemyAnimation4.png</file>
+        <file>enemyAnimation5.png</file>
+        <file>enemyAnimation6.png</file>
+        <file>enemyAnimation7.png</file>
+        <file>castle 2.jpeg</file>
+        <file>castle 3.jpeg</file>
+        <file>castle4.jpeg</file>
+        <file>fence2.jpeg</file>
+        <file>fence3.jpeg</file>
+        <file>fence4.jpeg</file>
     </qresource>
 </RCC>

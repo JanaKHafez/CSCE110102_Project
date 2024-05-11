@@ -10,20 +10,15 @@
 #include <QGraphicsView>
 #include <vector>
 #include <QKeyEvent>
-#include <QMouseEvent>
 #include <QGraphicsTextItem>
 #include <QGraphicsLineItem>
 #include <QTimer>
 #include <QGraphicsView>
-#include <QGraphicsPixmapItem>
 
 class Defence;
 class GameObject;
 class Enemy;
 class CitizenWorker;
-class PowerUp;
-
-extern bool audio;
 
 class Game: public QGraphicsView {
 
@@ -34,8 +29,7 @@ private:
     QGraphicsTextItem* enemyMsg;
     QGraphicsTextItem* powerUpMsg;
     QGraphicsTextItem* countdownMsg;
-    QGraphicsPixmapItem* audioPicON;
-    QGraphicsPixmapItem* audioPicOFF;
+    Defence* defence;
     QTimer* countdownTimer;
     QFile mapFile;
     int arrayOfMapN[10][10];
@@ -51,29 +45,22 @@ private:
     int timePassed;
 
 public:
-    Defence* defence;
-    PowerUp* powerUp;
+    Game(int level, QWidget *parent =0);
     QGraphicsScene *scene;
     QGraphicsView *view;
-    std::vector<GameObject*> map;
-    std::vector<Enemy*> enemies;
-    std::vector<CitizenWorker*> citizenWorkers;
-
-    Game(int level, QWidget *parent =0);
     void gameOver();
     void win();
     void nextLevel();
-    void restart();
-    void hitPowerUp();
-    void defeatEnemy(Enemy* e);
+    std::vector<GameObject*> map;
+    std::vector<Enemy*> enemies;
+    std::vector<CitizenWorker*> citizenWorkers;
     void keyPressEvent(QKeyEvent* event);
-    void mousePressEvent(QMouseEvent* event);
+    void defeatEnemy(Enemy* e);
     ~Game();
 
 public slots:
     void generateEnemy();
     void countdown();
-    void generatePowerUp();
 };
 
 #endif // GAME_H

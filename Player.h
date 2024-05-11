@@ -9,6 +9,7 @@
 #include "Game.h"
 #include "GameObject.h"
 #include<QGraphicsPixmapItem>
+#include<vector>
 
 
 

@@ -41,7 +41,19 @@ bool GameObject::damage(int amount)
             breakObject();
             return true;
         }
-        else {return false;}
+        else if (health <= 25)
+        {
+            setPixmap(photos[3]);
+        }
+        else if (health <= 50)
+        {
+            setPixmap(photos[2]);
+        }
+        else if(health <= 75)
+        {
+            setPixmap(photos[1]);
+        }
+        return false;
     }
     return true;
 }
@@ -66,19 +78,15 @@ void GameObject::breakObject()
     QPixmap scaledPixmap = pix.scaled(80, 80);
     setPixmap(scaledPixmap);
     QBrush greenBrush(Qt::green);
-    //setPixmap(QPixmap(":/../../Downloads/citzen.jpeg"));
-
-    if(audio)
-    {
-        QMediaPlayer *fenceMedia;
-        QAudioOutput *fenceAudio;
-        fenceAudio= new QAudioOutput();
-        fenceAudio -> setVolume (50);
-        fenceMedia = new QMediaPlayer ();
-        fenceMedia->setAudioOutput(fenceAudio);
-        fenceMedia ->setSource(QUrl("qrc:/new/prefix1/fenceDestroyed.mp3"));
-        fenceMedia ->play();
-    }
+     //setPixmap(QPixmap(":/../../Downloads/citzen.jpeg"));
+    QMediaPlayer *fenceMedia;
+    QAudioOutput *fenceAudio;
+    fenceAudio= new QAudioOutput();
+    fenceAudio -> setVolume (50);
+    fenceMedia = new QMediaPlayer ();
+    fenceMedia->setAudioOutput(fenceAudio);
+    fenceMedia ->setSource(QUrl("qrc:/new/prefix1/fenceDestroyed.mp3"));
+    fenceMedia ->play();
     broken = true;
 }
 
