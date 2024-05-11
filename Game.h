@@ -10,6 +10,7 @@
 #include <QGraphicsView>
 #include <vector>
 #include <QKeyEvent>
+#include <QMouseEvent>
 #include <QGraphicsTextItem>
 #include <QGraphicsLineItem>
 #include <QTimer>
@@ -20,6 +21,8 @@ class GameObject;
 class Enemy;
 class CitizenWorker;
 
+extern bool audio;
+
 class Game: public QGraphicsView {
 
 private:
@@ -29,6 +32,8 @@ private:
     QGraphicsTextItem* enemyMsg;
     QGraphicsTextItem* powerUpMsg;
     QGraphicsTextItem* countdownMsg;
+    QGraphicsTextItem* audioMsg;
+    QGraphicsTextItem* restartMsg;
     Defence* defence;
     QTimer* countdownTimer;
     QFile mapFile;
@@ -45,17 +50,20 @@ private:
     int timePassed;
 
 public:
-    Game(int level, QWidget *parent =0);
     QGraphicsScene *scene;
     QGraphicsView *view;
-    void gameOver();
-    void win();
-    void nextLevel();
     std::vector<GameObject*> map;
     std::vector<Enemy*> enemies;
     std::vector<CitizenWorker*> citizenWorkers;
-    void keyPressEvent(QKeyEvent* event);
+
+    Game(int level, QWidget *parent =0);
+    void gameOver();
+    void win();
+    void nextLevel();
+    void restart();
     void defeatEnemy(Enemy* e);
+    void keyPressEvent(QKeyEvent* event);
+    void mousePressEvent(QMouseEvent* event);
     ~Game();
 
 public slots:

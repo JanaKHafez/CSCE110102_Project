@@ -21,7 +21,7 @@ Defence::Defence (int thisX, int thisY, Game* thisGame)
     type = 2;
     color = Qt::blue;
     QBrush blueBrush(color);
-     //setPixmap(QPixmap(":/../../Downloads/citzen.jpeg"));
+    setBrush(blueBrush);
     setPos(x, y);
     L = new QGraphicsLineItem();
 }
@@ -39,7 +39,7 @@ void Defence::DisplayArrow()
 void Defence::aimRight(){
     if(aim < 20)
     {
-        aim += 1;
+        aim += 0.5;
         rotateArrow();
     }
 }
@@ -47,7 +47,7 @@ void Defence::aimRight(){
 void Defence::aimLeft(){
     if(aim > -20)
     {
-        aim += -1;
+        aim += -0.5;
         rotateArrow();
     }
 }

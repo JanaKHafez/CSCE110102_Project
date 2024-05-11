@@ -5,6 +5,7 @@
 #include "ClanCastle.h"
 
 Game *game;
+bool audio = true;
 
 int ClanCastle::castleCount = 0;
 

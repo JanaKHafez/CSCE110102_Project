@@ -9,7 +9,7 @@
 class Defence: public GameObject {
 
 protected:
-    int aim;
+    float aim;
     int power;
     QGraphicsLineItem* L;
     void rotateArrow();

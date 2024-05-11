@@ -45,11 +45,8 @@ Enemy::Enemy(int thisX, int thisY, int s, Game* game) : Player(thisX, thisY, gam
         speed = s;
         color = Qt::red;
         QBrush brush(color);
-        QPixmap pix = QPixmap(":/images/newgoblet.png");
-        QPixmap scaledPixmap = pix.scaled(120, 120);
-
-        setPixmap(scaledPixmap);
-         setPixmap(scaledPixmap);
+        setRect(0, 0, 20, 20);
+        setBrush(brush);
         setPos(x, y);
         damage = 25;
         Player::updateItem();
@@ -69,7 +66,6 @@ void Enemy::attackObject()
     {
         item->damage(damage);
         updateItem();
-
     }
 }
 
@@ -107,7 +103,7 @@ bool Enemy::damageThis(float amount)
     health -= amount;
     color = color.darker(100 + amount);
     QBrush brush(color);
-    // setBrush(brush);
+    setBrush(brush);
     if(health <= 0)
     {
         scene()->removeItem(this);

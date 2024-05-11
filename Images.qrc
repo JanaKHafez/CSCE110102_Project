@@ -1,6 +1,1 @@
-<RCC>
-    <qresource prefix="/new/prefix1">
-        <file>firebullet.jpeg</file>
-    </qresource>
-    <qresource prefix="/"/>
-</RCC>
+<RCC/>

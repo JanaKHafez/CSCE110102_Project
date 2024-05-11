@@ -11,10 +11,11 @@
 #include <QGraphicsTextItem>
 #include <QGraphicsLineItem>
 #include <QTimer>
-#include<QGraphicsPixmapItem>
 
 
-class GameObject: public QObject, public QGraphicsPixmapItem{
+extern bool audio;
+
+class GameObject: public QObject, public QGraphicsRectItem{
 
 protected:
     int health;

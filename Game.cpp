@@ -20,7 +20,6 @@
 #include "WizardTower.h"
 #include "Fence.h"
 #include "CitizenWorker.h"
-#include<QGraphicsPixmapItem>
 
 extern Game* game;
 
@@ -28,54 +27,55 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
 
     score = 0;
     timePassed = 0;
+    ClanCastle::castleCount = 0;
 
     level = thisLevel;
 
     switch (level)
     {
     case 1: {
-        goal = 1; //time in minutes
+        goal = 1.5; //time in minutes
         enemyTime = 15000;
         enemyCount = 2;
         defenceType = 1;
-        enemySpeed = 10;
+        enemySpeed = 10; //time between movement (increase to decrease speed)
         mapFile.setFileName(":/textFile/gameTextFile.txt");
         break;
     }
     case 2: {
-        goal = 1;
+        goal = 1.5;
         enemyTime = 20000;
         enemyCount = 3;
         defenceType = 2;
-        enemySpeed = 10;
-        mapFile.setFileName(":/textFile/gameTextFile.txt");
+        enemySpeed = 20;
+        mapFile.setFileName(":/textFile/gameTextFile3.txt");
         break;
     }
     case 3: {
-        goal = 1;
+        goal = 1.5;
         enemyTime = 20000;
         enemyCount = 4;
         defenceType = 3;
         enemySpeed = 10;
-        mapFile.setFileName(":/textFile/gameTextFile.txt");
+        mapFile.setFileName(":/textFile/gameTextFile3.txt");
         break;
     }
     case 4: {
-        goal = 1;
-        enemyTime = 15000;
+        goal = 1.5;
+        enemyTime = 12500;
         enemyCount = 3;
         defenceType = 2;
         enemySpeed = 10;
-        mapFile.setFileName(":/textFile/gameTextFile.txt");
+        mapFile.setFileName(":/textFile/gameTextFile2.txt");
         break;
     }
     case 5: {
-        goal = 1;
-        enemyTime = 20000;
+        goal = 1.5;
+        enemyTime = 15000;
         enemyCount = 5;
         defenceType = 3;
         enemySpeed = 10;
-        mapFile.setFileName(":/textFile/gameTextFile.txt");
+        mapFile.setFileName(":/textFile/gameTextFile2.txt");
         break;
     }
 
@@ -85,7 +85,9 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     loseMsg = new QGraphicsTextItem(QString("You Lose!"));
     enemyMsg = new QGraphicsTextItem(QString("Score: ") + QString::number(score));
     powerUpMsg = new QGraphicsTextItem(QString("Power Up!"));
-    countdownMsg = new QGraphicsTextItem(QString::number(goal) + QString(":00"));
+    countdownMsg = new QGraphicsTextItem(QString(""));
+    audioMsg = new QGraphicsTextItem(QString("Audio OFF"));
+    restartMsg = new QGraphicsTextItem(QString("Restart"));
     if(level == 1) {startMsg = new QGraphicsTextItem(QString("Level ") + QString::number(level) + "\n" + QString("Survive for ") + QString::number(goal*60) + QString(" seconds") + "\n" + QString("Press space to start"));}
     else {startMsg = new QGraphicsTextItem(QString("Level ") + QString::number(level -1) + QString(" Completed!"));}
 
@@ -119,6 +121,14 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     powerUpMsg -> setFont(fontBig);
     powerUpMsg -> setDefaultTextColor(colorWhite);
     powerUpMsg -> setPos(200, 500);
+
+    audioMsg -> setFont(fontSmall);
+    audioMsg -> setDefaultTextColor(colorWhite);
+    audioMsg -> setPos(695, 30);
+
+    restartMsg -> setFont(fontSmall);
+    restartMsg -> setDefaultTextColor(colorWhite);
+    restartMsg -> setPos(725, 0);
 
     setFixedSize(800, 800);
 
@@ -157,23 +167,10 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
         for (int j = 0; j < 10; j++) {
             switch (arrayOfMapN[i][j]) {
             case 0: { //empty land
-
-               // QGraphicsRectItem* item = new QGraphicsRectItem(j * 80, i * 80, 80, 80);
-                //QBrush greenBrush(Qt::green);
-               //item->setBrush(greenBrush);
-               QGraphicsPixmapItem *item = new QGraphicsPixmapItem();
-
-               QPixmap pix = QPixmap(":/images/greenland.jpeg");
-               QPixmap scaledPixmap = pix.scaled(80, 80);
-               item->setPixmap(scaledPixmap);
-               item->setPos(j * 80, i * 80);
-
-
-               //item->setVisible(true);
-
-               scene->addItem(item);
-
-
+                QGraphicsRectItem* item = new QGraphicsRectItem(j * 80, i * 80, 80, 80);
+                QBrush greenBrush(Qt::green);
+                item->setBrush(greenBrush);
+                scene->addItem(item);
                 break;
             }
             case 1: { //clan castle
@@ -218,6 +215,8 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     }
 
     scene -> addItem(startMsg);
+    scene -> addItem(audioMsg);
+    scene -> addItem(restartMsg);
 
     if(level > 1) {QTimer::singleShot(2500, qApp, [this](){
             freeze = false;
@@ -278,16 +277,57 @@ void Game::keyPressEvent(QKeyEvent* event)
     }
 }
 
+void Game::mousePressEvent(QMouseEvent* event)
+{
+    QPointF mousePoint = event->pos();
+    qreal x = mousePoint.x();
+    qreal y = mousePoint.y();
+
+     if(x >= 695 && x <= 800 && y <= 60 && y >= 35)
+    {
+        if(audio == true)
+        {
+            audio = false;
+            scene->removeItem(audioMsg);
+            audioMsg->setPlainText(QString("Audio ON"));
+            scene->addItem(audioMsg);
+        }
+        else
+        {
+            audio = true;
+            scene->removeItem(audioMsg);
+            audioMsg->setPlainText(QString("Audio OFF"));
+            scene->addItem(audioMsg);
+        }
+    }
+
+    else if(x >= 730 && x <= 800 && y <= 30 && y >= 10)
+    {
+        restart();
+    }
+}
+
+void Game::restart()
+{
+    delete this;
+    game = new Game(1);
+    game->show();
+    game->setFocus();
+}
+
 void Game::generateEnemy(){
 
-    QMediaPlayer *enemyMedia;
-    QAudioOutput *enemyAudio;
-    enemyAudio= new QAudioOutput();
-    enemyAudio -> setVolume (100);
-    enemyMedia = new QMediaPlayer ();
-    enemyMedia->setAudioOutput(enemyAudio);
-    enemyMedia ->setSource(QUrl("qrc:/new/prefix1/incoming enemy.mp3"));
-    enemyMedia ->play();
+    if(audio)
+    {
+        QMediaPlayer *enemyMedia;
+        QAudioOutput *enemyAudio;
+        enemyAudio= new QAudioOutput();
+        enemyAudio -> setVolume (100);
+        enemyMedia = new QMediaPlayer ();
+        enemyMedia->setAudioOutput(enemyAudio);
+        enemyMedia ->setSource(QUrl("qrc:/new/prefix1/incoming enemy.mp3"));
+        enemyMedia ->play();
+    }
 
     Enemy* e;
     int randomX;
@@ -307,27 +347,34 @@ void Game::gameOver()
     scene->addItem(loseMsg);
     delete countdownTimer;
     QTimer::singleShot(5000, qApp, &QApplication::quit);
-    QMediaPlayer *loseMedia;
-    QAudioOutput *loseAudio;
-    loseAudio= new QAudioOutput();
-    loseAudio -> setVolume (50);
-    loseMedia = new QMediaPlayer ();
-    loseMedia->setAudioOutput(loseAudio);
-    loseMedia ->setSource(QUrl("qrc:/new/prefix1/lose.mp3"));
-    loseMedia ->play();
+
+    if(audio)
+    {
+        QMediaPlayer *loseMedia;
+        QAudioOutput *loseAudio;
+        loseAudio= new QAudioOutput();
+        loseAudio -> setVolume (50);
+        loseMedia = new QMediaPlayer ();
+        loseMedia->setAudioOutput(loseAudio);
+        loseMedia ->setSource(QUrl("qrc:/new/prefix1/lose.mp3"));
+        loseMedia ->play();
+    }
 }
 
 void Game::win()
 {
-    scene->addItem(winMsg);
-    QMediaPlayer *victoryMedia;
-    QAudioOutput *victoryAudio;
-    victoryAudio= new QAudioOutput();
-    victoryAudio -> setVolume (100);
-    victoryMedia = new QMediaPlayer ();
-    victoryMedia->setAudioOutput(victoryAudio);
-    victoryMedia ->setSource(QUrl("qrc:/new/prefix1/Victory.mp3"));
-    victoryMedia ->play();
+    if(audio)
+    {
+        scene->addItem(winMsg);
+        QMediaPlayer *victoryMedia;
+        QAudioOutput *victoryAudio;
+        victoryAudio= new QAudioOutput();
+        victoryAudio -> setVolume (100);
+        victoryMedia = new QMediaPlayer ();
+        victoryMedia->setAudioOutput(victoryAudio);
+        victoryMedia ->setSource(QUrl("qrc:/new/prefix1/Victory.mp3"));
+        victoryMedia ->play();
+    }
 
     if(level < 5)
     {
@@ -342,14 +389,18 @@ void Game::win()
 void Game::defeatEnemy(Enemy* e)
 {
     score++;
-    QMediaPlayer *scoreMedia;
-    QAudioOutput *scoreAudio;
-    scoreAudio= new QAudioOutput();
-    scoreAudio -> setVolume (50);
-    scoreMedia = new QMediaPlayer ();
-    scoreMedia->setAudioOutput(scoreAudio);
-    scoreMedia ->setSource(QUrl("qrc:/new/prefix1/score.mp3"));
-    scoreMedia ->play();
+
+    if(audio)
+    {
+        QMediaPlayer *scoreMedia;
+        QAudioOutput *scoreAudio;
+        scoreAudio= new QAudioOutput();
+        scoreAudio -> setVolume (50);
+        scoreMedia = new QMediaPlayer ();
+        scoreMedia->setAudioOutput(scoreAudio);
+        scoreMedia ->setSource(QUrl("qrc:/new/prefix1/score.mp3"));
+        scoreMedia ->play();
+    }
 
     for(int i = 0; i < enemies.size(); i++)
     {
@@ -369,14 +420,17 @@ void Game::defeatEnemy(Enemy* e)
         defence->increasePower(50);
         QTimer::singleShot(2000, qApp, [this](){ scene->removeItem(powerUpMsg); });
 
-        QMediaPlayer *powerUpMedia;
-        QAudioOutput *powerUpAudio;
-        powerUpAudio= new QAudioOutput();
-        powerUpAudio -> setVolume (100);
-        powerUpMedia = new QMediaPlayer ();
-        powerUpMedia->setAudioOutput(powerUpAudio);
-        powerUpMedia ->setSource(QUrl("qrc:/new/prefix1/powerUp.mp3"));
-        powerUpMedia ->play();
+        if(audio)
+        {
+            QMediaPlayer *powerUpMedia;
+            QAudioOutput *powerUpAudio;
+            powerUpAudio= new QAudioOutput();
+            powerUpAudio -> setVolume (100);
+            powerUpMedia = new QMediaPlayer ();
+            powerUpMedia->setAudioOutput(powerUpAudio);
+            powerUpMedia ->setSource(QUrl("qrc:/new/prefix1/powerUp.mp3"));
+            powerUpMedia ->play();
+        }
     }
 }
 
@@ -384,14 +438,17 @@ void Game::nextLevel()
 {
     int nextLevel = level + 1;
 
-    QMediaPlayer *nextLevelMedia;
-    QAudioOutput *nextLevelAudio;
-    nextLevelAudio= new QAudioOutput();
-    nextLevelAudio -> setVolume (100);
-    nextLevelMedia = new QMediaPlayer ();
-    nextLevelMedia->setAudioOutput(nextLevelAudio);
-    nextLevelMedia ->setSource(QUrl("qrc:/new/prefix1/nextLevel.mp3"));
-    nextLevelMedia ->play();
+    if(audio)
+    {
+        QMediaPlayer *nextLevelMedia;
+        QAudioOutput *nextLevelAudio;
+        nextLevelAudio= new QAudioOutput();
+        nextLevelAudio -> setVolume (100);
+        nextLevelMedia = new QMediaPlayer ();
+        nextLevelMedia->setAudioOutput(nextLevelAudio);
+        nextLevelMedia ->setSource(QUrl("qrc:/new/prefix1/nextLevel.mp3"));
+        nextLevelMedia ->play();
+    }
 
     delete this;
     game = new Game(nextLevel);
@@ -412,7 +469,8 @@ void Game::countdown()
     min = (time - sec)/60;
 
     scene->removeItem(countdownMsg);
-    countdownMsg->setPlainText(QString::number(min) + QString(":") + QString::number(sec));
+    if(sec > 9) {countdownMsg->setPlainText(QString::number(min) + QString(":") + QString::number(sec));}
+    else {countdownMsg->setPlainText(QString::number(min) + QString(":0") + QString::number(sec));}
     scene->addItem(countdownMsg);
 
     if(goal*60 <= timePassed)
