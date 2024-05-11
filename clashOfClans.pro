@@ -25,7 +25,8 @@ SOURCES += \
     Potion.cpp \
     WizardTower.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    powerup.cpp
 
 HEADERS += \
     ArcherTower.h \
@@ -42,7 +43,8 @@ HEADERS += \
     Player.h \
     Potion.h \
     WizardTower.h \
-    mainwindow.h
+    mainwindow.h \
+    powerup.h
 
 FORMS += \
     mainwindow.ui

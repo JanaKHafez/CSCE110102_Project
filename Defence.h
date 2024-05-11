@@ -2,15 +2,16 @@
 #define DEFENCE_H
 
 #include <qstring.h>
-#include "Game.h"
 #include "GameObject.h"
+#include "powerUp.h"
 
+class Game;
 
 class Defence: public GameObject {
 
 protected:
     float aim;
-    int power;
+    float power;
     QGraphicsLineItem* L;
     void rotateArrow();
     Game* game;
@@ -23,7 +24,7 @@ public:
     virtual void shoot() = 0;
     void aimRight();
     void aimLeft();
-    void increasePower(int percentage);
+    void increasePower(float percentage);
 
 public slots:
     void letShoot();

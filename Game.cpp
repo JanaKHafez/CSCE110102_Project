@@ -20,6 +20,7 @@
 #include "WizardTower.h"
 #include "Fence.h"
 #include "CitizenWorker.h"
+#include "powerup.h"
 
 extern Game* game;
 
@@ -235,6 +236,8 @@ void Game::keyPressEvent(QKeyEvent* event)
         {
             if(event->key()== Qt::Key_Space)
             {
+                powerUp = nullptr;
+
                 started = true;
                 scene->removeItem(startMsg);
 
@@ -242,6 +245,10 @@ void Game::keyPressEvent(QKeyEvent* event)
                 QTimer* EnemyTimer = new QTimer();
                 connect(EnemyTimer, &QTimer::timeout, this, &Game::generateEnemy);
                 EnemyTimer->start(enemyTime);
+
+                QTimer* powerUpTimer = new QTimer();
+                connect(powerUpTimer, &QTimer::timeout, this, &Game::generatePowerUp);
+                powerUpTimer->start(30000);
 
                 countdownTimer = new QTimer();
                 connect(countdownTimer, &QTimer::timeout, this, &Game::countdown);
@@ -305,6 +312,18 @@ void Game::mousePressEvent(QMouseEvent* event)
     {
         restart();
     }
+}
+
+void Game::generatePowerUp()
+{
+    PowerUp * p;
+    int randX;
+    int randY;
+    randX = rand()%700+50;
+    randY = rand()%100 + 500;
+    p = new PowerUp (this, randX, randY);
+    powerUp = p;
+    scene->addItem(p);
 }
 
 void Game::restart()
@@ -419,18 +438,6 @@ void Game::defeatEnemy(Enemy* e)
         scene->addItem(powerUpMsg);
         defence->increasePower(50);
         QTimer::singleShot(2000, qApp, [this](){ scene->removeItem(powerUpMsg); });
-
-        if(audio)
-        {
-            QMediaPlayer *powerUpMedia;
-            QAudioOutput *powerUpAudio;
-            powerUpAudio= new QAudioOutput();
-            powerUpAudio -> setVolume (100);
-            powerUpMedia = new QMediaPlayer ();
-            powerUpMedia->setAudioOutput(powerUpAudio);
-            powerUpMedia ->setSource(QUrl("qrc:/new/prefix1/powerUp.mp3"));
-            powerUpMedia ->play();
-        }
     }
 }
 
@@ -478,6 +485,16 @@ void Game::countdown()
         delete countdownTimer;
         win();
     }
+}
+
+void Game::hitPowerUp()
+{
+    scene -> removeItem(powerUp);
+    delete powerUp;
+    powerUp = nullptr;
+    scene->addItem(powerUpMsg);
+    defence->increasePower(50);
+    QTimer::singleShot(2000, qApp, [this](){ scene->removeItem(powerUpMsg); });
 }
 
 Game::~Game()

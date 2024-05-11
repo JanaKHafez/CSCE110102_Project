@@ -20,6 +20,7 @@ class Defence;
 class GameObject;
 class Enemy;
 class CitizenWorker;
+class PowerUp;
 
 extern bool audio;
 
@@ -34,7 +35,6 @@ private:
     QGraphicsTextItem* countdownMsg;
     QGraphicsTextItem* audioMsg;
     QGraphicsTextItem* restartMsg;
-    Defence* defence;
     QTimer* countdownTimer;
     QFile mapFile;
     int arrayOfMapN[10][10];
@@ -49,7 +49,10 @@ private:
     int enemySpeed;
     int timePassed;
 
+
 public:
+    Defence* defence;
+    PowerUp* powerUp;
     QGraphicsScene *scene;
     QGraphicsView *view;
     std::vector<GameObject*> map;
@@ -61,6 +64,7 @@ public:
     void win();
     void nextLevel();
     void restart();
+    void hitPowerUp();
     void defeatEnemy(Enemy* e);
     void keyPressEvent(QKeyEvent* event);
     void mousePressEvent(QMouseEvent* event);
@@ -69,6 +73,7 @@ public:
 public slots:
     void generateEnemy();
     void countdown();
+    void generatePowerUp();
 };
 
 #endif // GAME_H

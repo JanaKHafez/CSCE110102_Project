@@ -7,6 +7,8 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include "Enemy.h"
+#include "powerup.h"
+#include "Defence.h"
 
 Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsRectItem()
 {
@@ -34,6 +36,10 @@ Bullet::Bullet(int thisAim, Game* thisGame, int thisPower):QObject(), QGraphicsR
 
 void Bullet:: move()
 {
+    if(game->powerUp != nullptr && (x() + 10 >= game->powerUp->getX() && x() <= game->powerUp->getX() + 20) && (y() + 10 >= game->powerUp->getY() && y() <= game->powerUp->getY() + 20))
+    {
+        game->hitPowerUp();
+    }
     for(int i = 0; i < game->enemies.size(); i++)
     {
         if((x() + 10 >= game->enemies[i]->getX() && x() <= game->enemies[i]->getX() + 20) && (y() + 10 >= game->enemies[i]->getY() && y() <= game->enemies[i]->getY() + 20))

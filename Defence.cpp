@@ -1,5 +1,6 @@
 #include "Defence.h"
-
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include <QTimer>
 
 
@@ -64,7 +65,19 @@ void Defence::letShoot()
     }
 }
 
-void Defence::increasePower(int p)
+void Defence::increasePower(float p)
 {
+    if(audio)
+    {
+        QMediaPlayer *powerUpMedia;
+        QAudioOutput *powerUpAudio;
+        powerUpAudio= new QAudioOutput();
+        powerUpAudio -> setVolume (100);
+        powerUpMedia = new QMediaPlayer ();
+        powerUpMedia->setAudioOutput(powerUpAudio);
+        powerUpMedia ->setSource(QUrl("qrc:/new/prefix1/powerUp.mp3"));
+        powerUpMedia ->play();
+    }
+
     power += power*(p/100);
 }
