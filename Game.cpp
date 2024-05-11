@@ -37,7 +37,7 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     {
     case 1: {
         goal = 1.5; //time in minutes
-        enemyTime = 15000;
+        enemyTime = 13000;
         enemyCount = 2;
         defenceType = 1;
         enemySpeed = 10; //time between movement (increase to decrease speed)
@@ -64,16 +64,16 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     }
     case 4: {
         goal = 2;
-        enemyTime = 15000;
+        enemyTime = 12500;
         enemyCount = 3;
         defenceType = 2;
-        enemySpeed = 10;
+        enemySpeed = 20;
         mapFile.setFileName(":/textFile/gameTextFile2.txt");
         break;
     }
     case 5: {
         goal = 2;
-        enemyTime = 20000;
+        enemyTime = 17500;
         enemyCount = 5;
         defenceType = 3;
         enemySpeed = 10;
