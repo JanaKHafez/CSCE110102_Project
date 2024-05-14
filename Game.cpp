@@ -143,7 +143,7 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
 
     countdownMsg -> setFont(fontSmall);
     countdownMsg -> setDefaultTextColor(colorWhite);
-    countdownMsg -> setPos(10, 60);
+    countdownMsg -> setPos(10,  0);
 
     addCitizenMsg1 -> setFont(fontSmall);
     addCitizenMsg1 -> setDefaultTextColor(colorWhite);
@@ -399,7 +399,7 @@ void Game::keyPressEvent(QKeyEvent* event)
                 {
                     scene->addItem(score2Msg);
                 }
-                scene->addItem(countdownMsg);
+                else if(mode == 1) {scene->addItem(countdownMsg);}
 
                 generateEnemy();
             }

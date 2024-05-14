@@ -67,7 +67,7 @@ bool GameObject::repair(int amount)
         color = color.lighter(amount*5);
         QBrush newBrush(color);
         //setPixmap(QPixmap(":/../../Downloads/citzen.jpeg"));
-        if(health > 100)
+        if(health >= 100)
         {
             health = 100;
             setPixmap(photos[0]);
