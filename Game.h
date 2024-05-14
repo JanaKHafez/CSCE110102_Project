@@ -31,27 +31,35 @@ private:
     QGraphicsTextItem* startMsg;
     QGraphicsTextItem* loseMsg;
     QGraphicsTextItem* winMsg;
-    QGraphicsTextItem* enemyMsg;
+    QGraphicsTextItem* scoreMsg;
+    QGraphicsTextItem* score2Msg;
     QGraphicsTextItem* powerUpMsg;
     QGraphicsTextItem* countdownMsg;
     QGraphicsPixmapItem* audioPicON;
     QGraphicsPixmapItem* audioPicOFF;
-    QTimer* countdownTimer;
+    QGraphicsPixmapItem* pausePic;
+    QGraphicsPixmapItem* playPic;
+    QTimer* gameTimer;
     QFile mapFile;
     int arrayOfMapN[10][10];
     bool started = false;
     bool freeze = true;
+    bool paused = false;
+    bool over = false;
     int score;
+    int score2;
     int level;
     float goal;
     int enemyTime;
     int enemyCount;
     int defenceType;
     int enemySpeed;
-    int timePassed;
+    int time = 0;
+    void end();
 
 public:
-    Defence* defence;
+    Defence* defence = nullptr;
+    Defence* defence2;
     PowerUp* powerUp;
     QGraphicsScene *scene;
     QGraphicsView *view;
@@ -59,21 +67,23 @@ public:
     std::vector<Enemy*> enemies;
     std::vector<CitizenWorker*> citizenWorkers;
 
-    Game(int level, QWidget *parent =0);
-    void gameOver();
+    Game( int level = 1, QWidget *parent = 0);
+    void gameOver(int player);
     void win();
     void nextLevel();
     void restart();
     void hitPowerUp();
-    void defeatEnemy(Enemy* e);
+    void defeatEnemy(Enemy* enemey, int player = 1);
+    void pause();
+    void play();
     void keyPressEvent(QKeyEvent* event);
     void mousePressEvent(QMouseEvent* event);
+    void generatePowerUp();
+    void generateEnemy();
     ~Game();
 
 public slots:
-    void generateEnemy();
-    void countdown();
-    void generatePowerUp();
+    void millisecond();
 };
 
 #endif // GAME_H

@@ -2,8 +2,9 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 
-Fence::Fence(int thisX, int thisY)
+Fence::Fence(int thisX, int thisY, int p)
 {
+    player = p;
     x = thisX;
     y = thisY;
     type = 3;

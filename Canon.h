@@ -6,7 +6,7 @@
 class Canon : public Defence {
 
 public:
-    Canon(int x, int y, Game* game);
+    Canon(int x, int y, Game* game, int player = 1);
     void DisplayPic();
     void shoot();
 };

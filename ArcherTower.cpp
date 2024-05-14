@@ -1,7 +1,7 @@
 #include "ArcherTower.h"
 #include "Arrow.h"
 
-ArcherTower::ArcherTower(int x, int y, Game* game) : Defence(x, y, game)
+ArcherTower::ArcherTower(int x, int y, Game* game, int p) : Defence(x, y, game, p)
 {
     QColor thisColor(244,235,213,255);
     color = thisColor;

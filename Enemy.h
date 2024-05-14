@@ -6,17 +6,18 @@
 class Enemy: public Player {
 
 private:
-    int damage;
     QColor color;
+    int damage;
     int speed;
     int angle;
     int i=0;
+    int time=0;
+    QTimer* enemyTimer;
     int moveBackCounter;
-    bool AnimationTimerStarted = false;
+    bool animationStarted = false;
+    bool knockbackStarted = false;
+
     std::vector<QPixmap> enemyPhotos;
-    QTimer* moveTimer;
-    QTimer* knockBackTimer;
-    QTimer* MoveAnimationTimer;
 
     QPixmap pix2 = QPixmap(":/images/enemyAnimation1.png").scaled(80,80);
     QPixmap pix3 = QPixmap(":/images/enemyAnimation2.png").scaled(80,80);
@@ -27,16 +28,19 @@ private:
     QPixmap pix8 = QPixmap(":/images/enemyAnimation7.png").scaled(80,80);
 
 public slots:
-    void move();
-    GameObject* getNearest();
-    void moveBack();
-    void enemyMoveAnimation();
+    void millisecond();
 
 public:
     Enemy(int thisX, int thisY, int speed, Game* game);
     void attackObject();
-    bool damageThis(float amount);
+    void pause();
+    void play();
+    bool damageThis(float amount, int player);
     void knockBack(int angle);
+    void move();
+    GameObject* getNearest();
+    void moveBack();
+    void enemyMoveAnimation();
     ~Enemy();
 };
 

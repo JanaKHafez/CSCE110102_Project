@@ -19,7 +19,7 @@ void Potion::damageEnemy()
         {
             if( game->enemies[i] == enemy)
             {
-                enemy->damageThis(12.5);
+                enemy->damageThis(12.5, player);
                 return;
             }
         }

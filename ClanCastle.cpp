@@ -2,16 +2,19 @@
 
 #include "Game.h"
 
-ClanCastle::ClanCastle(int thisX, int thisY, Game* thisGame)
+ClanCastle::ClanCastle(int thisX, int thisY, Game* thisGame, int p)
 {
+    player = p;
     game = thisGame;
-    castleCount ++;
     broken = false;
     x = thisX;
     y = thisY;
     type = 1;
     color = Qt::yellow;
     QBrush yellowBrush(color);
+
+    if(p == 1) {castleCount ++;}
+    else if(p == 2) {castleCount2++;}
 
     QPixmap pix = QPixmap(":/images/file.png");
     QPixmap scaledPixmap = pix.scaled(80, 80);
@@ -43,10 +46,21 @@ void ClanCastle::breakObject()
         setPixmap(scaledPixmap);
         //setPixmap(QPixmap(":/../../Downloads/citzen.jpeg"));
         broken = true;
-        castleCount--;
-        if(castleCount <= 0)
+        if(player == 1)
         {
-            game->gameOver();
+            castleCount--;
+            if(castleCount <= 0)
+            {
+                game->gameOver(1);
+            }
+        }
+        else if (player == 2)
+        {
+            castleCount2--;
+            if(castleCount2 <= 0)
+            {
+                game->gameOver(2);
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ GameObject::GameObject() {
 
 int GameObject::getX() {return x;}
 int GameObject::getY() {return y;}
+int GameObject::getPlayer() {return player;}
 
 bool GameObject::isBroken()
 {
@@ -28,7 +29,7 @@ bool GameObject::isFixed()
     else {return false;}
 }
 
-bool GameObject::damage(int amount)
+bool GameObject::damage(float amount)
 {
     if(!broken)
     {

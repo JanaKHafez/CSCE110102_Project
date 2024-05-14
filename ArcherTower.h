@@ -6,7 +6,7 @@
 class ArcherTower : public Defence {
 
 public:
-    ArcherTower(int x, int y, Game* game);
+    ArcherTower(int x, int y, Game* game, int player = 1);
     void DisplayPic();
     void shoot();
 };

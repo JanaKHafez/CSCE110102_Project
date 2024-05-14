@@ -7,12 +7,14 @@
 class CitizenWorker : public Player {
 
 private:
+    int player;
     int repair;
     int i = 0;
     int j = 0;
-    bool AnimationTimerStarted = false;
-    QTimer * repairTimerAnimation;
-    QTimer * ti;
+    int time = 0;
+    bool startMoveAnimation = false;
+    bool startRepairAnimation = false;
+    QTimer* citizenTimer;
     std::vector<QPixmap> photos;
     std::vector<QPixmap> repairPhotos;
 
@@ -29,14 +31,17 @@ private:
     QPixmap pix11 = QPixmap(":/images/citzenWorkerRepairAnimation4.png").scaled(50,50);
 
 public slots:
+    void millisecond();
+
+public:
+    CitizenWorker(int thisX, int thisY, Game* game, int player = 1);
+    GameObject* getNearest();
     void move();
     void moveAnimation();
     void repairAnimation();
-
-public:
-    CitizenWorker(int thisX, int thisY, Game* game);
-    GameObject* getNearest();
     void repairObject();
+    void pause();
+    void play();
     ~CitizenWorker();
 };
 

@@ -8,11 +8,13 @@
 
 void Defence::rotateArrow()
 {
-    L->setRotation(aim*-1*4.5);
+    if(player == 1) {L->setRotation(aim*-1*4.5);}
+    else if(player == 2) {L->setRotation(aim*1*4.5);}
 }
 
-Defence::Defence (int thisX, int thisY, Game* thisGame)
+Defence::Defence (int thisX, int thisY, Game* thisGame, int p)
 {
+    player = p;
     aim = 0;
     power = 25;
     allowShoot = true;

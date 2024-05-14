@@ -1,21 +1,16 @@
 #include "CitizenWorker.h"
 
-CitizenWorker::CitizenWorker(int thisX, int thisY, Game* game) : Player(thisX, thisY, game)
+CitizenWorker::CitizenWorker(int thisX, int thisY, Game* game, int p) : Player(thisX, thisY, game)
 {
     // QBrush whiteBrush(Qt::white);
+
+    player = p;
 
     QPixmap pix = QPixmap(":/images/citzen (1) (1).png");
     QPixmap scaledPixmap = pix.scaled(50, 50);
     setPixmap(scaledPixmap);
     setPos(x, y);
-    repair = 25;
-    QTimer* timerMove = new QTimer();
-    updateItem();
-    connect(timerMove, &QTimer::timeout, this, &CitizenWorker::move);
-    timerMove->start(100);
-    QTimer* timerRepair = new QTimer();
-    connect(timerRepair, &QTimer::timeout, this, &CitizenWorker::repairObject);
-    timerRepair->start(1000);
+    repair = 25;    
     stepSize = 20;
 
     photos.push_back(pix2);
@@ -29,6 +24,38 @@ CitizenWorker::CitizenWorker(int thisX, int thisY, Game* game) : Player(thisX, t
     repairPhotos.push_back(pix9);
     repairPhotos.push_back(pix10);
     repairPhotos.push_back(pix11);
+
+    Player::updateItem();
+
+    citizenTimer = new QTimer;
+    connect(citizenTimer, &QTimer::timeout, this, &CitizenWorker::millisecond);
+    citizenTimer->start(100);
+
+}
+
+void CitizenWorker::millisecond()
+{
+    time+=100;
+
+    if(time%100 == 0)
+    {
+        move();
+    }
+
+    if(time%1000 == 0)
+    {
+        repairObject();
+    }
+
+    if(time%100 == 0 && startMoveAnimation)
+    {
+        moveAnimation();
+    }
+
+    if(time%100 == 0 && startRepairAnimation)
+    {
+        repairAnimation();
+    }
 }
 
 void CitizenWorker::move()
@@ -77,7 +104,7 @@ GameObject* CitizenWorker::getNearest()
     GameObject* item = nullptr;
     for(unsigned long long i = 0; i < game->map.size(); i++)
     {
-        if((game->map)[i]->isBroken() == false && (game->map)[i]->isFixed() == false)
+        if((game->map)[i]->isBroken() == false && (game->map)[i]->isFixed() == false && (game->map)[i]->getPlayer() == player)
         {
             int thisX = (game->map)[i]->getX();
             int thisY = (game->map)[i]->getY();
@@ -92,12 +119,10 @@ GameObject* CitizenWorker::getNearest()
         }
     }
 
-    if(item != nullptr && reached == false && !AnimationTimerStarted)
+    if(item != nullptr && reached == false && !startMoveAnimation)
     {
-        AnimationTimerStarted = true;
-        ti = new QTimer();
-        connect(ti, &QTimer::timeout, this, &CitizenWorker::moveAnimation);
-        ti->start(100);
+        startRepairAnimation = false;
+        startMoveAnimation = true;
     }
 
     return item;
@@ -105,20 +130,29 @@ GameObject* CitizenWorker::getNearest()
 
 void CitizenWorker::repairObject()
 {
-    Player::updateItem();
     if(reached && item != nullptr)
     {
-        if(AnimationTimerStarted)
+        startMoveAnimation = false;
+        startRepairAnimation = true;
+        if(item->repair(25))
         {
-            delete ti;
-            AnimationTimerStarted = false;
+            startRepairAnimation=false;
+            startMoveAnimation=true;
         }
-
-        item->repair(repair);
-        repairTimerAnimation = new QTimer();
-        connect(repairTimerAnimation, &QTimer::timeout, this, &CitizenWorker::repairAnimation);
-        repairTimerAnimation->start(100);
     }
+    Player::updateItem();
+}
+
+void CitizenWorker::pause()
+{
+    delete citizenTimer;
+}
+
+void CitizenWorker::play()
+{
+    citizenTimer = new QTimer;
+    connect(citizenTimer, &QTimer::timeout, this, &CitizenWorker::millisecond);
+    citizenTimer->start(100);
 }
 
 CitizenWorker::~CitizenWorker()

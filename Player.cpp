@@ -25,6 +25,10 @@ void Player::updateItem()
         {
             toY +=50;
         }
+        else
+        {
+            toY -= 50;
+        }
     }
     else
     {

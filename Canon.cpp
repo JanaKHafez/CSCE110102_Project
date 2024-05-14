@@ -1,7 +1,7 @@
 #include "Canon.h"
 #include "Bullet.h"
 
-Canon::Canon(int x, int y, Game* game) : Defence(x, y, game)
+Canon::Canon(int x, int y, Game* game, int p) : Defence(x, y, game, p)
 {
     QColor thisColor(189,169,156,255);
     color = thisColor;
@@ -26,7 +26,7 @@ void Canon::shoot()
             delete shootTimer;
         }
 
-        Bullet * bullet = new Bullet(aim, game, power);
+        Bullet * bullet = new Bullet(aim, game, power, player);
         bullet->setPos(x-2,y+8);
         scene()->addItem(bullet);
         allowShoot = false;

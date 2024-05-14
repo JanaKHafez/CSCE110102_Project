@@ -19,5 +19,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+private slots:
+    void on_pushButtonSinglePlayer_clicked();
+    void on_pushButtonMultiplayer_clicked();
 };
 #endif // MAINWINDOW_H

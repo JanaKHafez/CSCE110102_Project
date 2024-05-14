@@ -12,7 +12,8 @@ private:
 
 public:
     static int castleCount;
-    ClanCastle(int thisX, int thisY, Game* thisGame);
+    static int castleCount2;
+    ClanCastle(int thisX, int thisY, Game* thisGame, int player = 1);
     void breakObject();
 };
 

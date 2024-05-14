@@ -1,7 +1,7 @@
 #include "WizardTower.h"
 #include "Potion.h"
 
-WizardTower::WizardTower(int x, int y, Game* game): Defence(x, y, game)
+WizardTower::WizardTower(int x, int y, Game* game, int p): Defence(x, y, game, p)
 {
     QColor thisColor(93,68,122,255);
     color = thisColor;

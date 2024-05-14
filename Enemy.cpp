@@ -6,7 +6,7 @@ Enemy::Enemy(int thisX, int thisY, int s, Game* game) : Player(thisX, thisY, gam
 {
     if(game != nullptr)
     {
-        stepSize = 2;
+        stepSize = 10;
         damage = 25;
 
         enemyPhotos.push_back(pix2);
@@ -27,20 +27,37 @@ Enemy::Enemy(int thisX, int thisY, int s, Game* game) : Player(thisX, thisY, gam
         setPixmap(scaledPixmap);
         setPos(x, y);
 
-        AnimationTimerStarted = true;
-        MoveAnimationTimer = new QTimer();
-        connect(MoveAnimationTimer, &QTimer::timeout, this, &Enemy::enemyMoveAnimation);
-        MoveAnimationTimer->start(120);
-
         Player::updateItem();
 
-        moveTimer = new QTimer();
-        connect(moveTimer, &QTimer::timeout, this, &Enemy::move);
-        moveTimer->start(speed);
+        enemyTimer = new QTimer();
+        connect(enemyTimer, &QTimer::timeout, this, &Enemy::millisecond);
+        enemyTimer->start(50);
+    }
+}
 
-        QTimer* attackTimer = new QTimer();
-        connect(attackTimer, &QTimer::timeout, this, &Enemy::attackObject);
-        attackTimer->start(1750);
+void Enemy::millisecond()
+{
+    time+=50;
+
+    if(time%100 == 0 && !knockbackStarted)
+    {
+        animationStarted = true;
+        enemyMoveAnimation();
+    }
+
+    if(time%speed == 0 && !knockbackStarted)
+    {
+        move();
+    }
+
+    if(time%1750 == 0)
+    {
+        attackObject();
+    }
+
+    if(time%speed == 0 && knockbackStarted)
+    {
+        moveBack();
     }
 }
 
@@ -92,8 +109,7 @@ void Enemy::attackObject()
     if(reached && item != nullptr)
     {
         item->damage(damage);
-        updateItem();
-
+        Player::updateItem();
     }
 }
 
@@ -126,7 +142,7 @@ GameObject* Enemy::getNearest()
     //return first item in path
 }
 
-bool Enemy::damageThis(float amount)
+bool Enemy::damageThis(float amount, int p)
 {
     health -= amount;
     color = color.darker(100 + amount);
@@ -135,7 +151,7 @@ bool Enemy::damageThis(float amount)
     if(health <= 0)
     {
         scene()->removeItem(this);
-        game->defeatEnemy(this);
+        game->defeatEnemy(this, p);
         //enemy dying sound effect
 
         delete this;
@@ -148,14 +164,8 @@ void Enemy::knockBack(int thisAngle)
 {
     angle = thisAngle;
     moveBackCounter = 0;
-    if(moveTimer != nullptr) {
-        delete moveTimer;
-        moveTimer = nullptr;
-    }
+    knockbackStarted = true;
     reached = false;
-    knockBackTimer = new QTimer();
-    connect(knockBackTimer, &QTimer::timeout, this, &Enemy::moveBack);
-    knockBackTimer->start(speed);
 }
 
 void Enemy::moveBack()
@@ -169,15 +179,21 @@ void Enemy::moveBack()
     }
     else
     {
-        delete knockBackTimer;
-        knockBackTimer = nullptr;
-        if(moveTimer == nullptr)
-        {
-            moveTimer = new QTimer();
-            connect(moveTimer, &QTimer::timeout, this, &Enemy::move);
-            moveTimer->start(speed);
-        }
+        knockbackStarted = false;
+        updateItem();
     }
+}
+
+void Enemy::pause()
+{
+    delete enemyTimer;
+}
+
+void Enemy::play()
+{
+    enemyTimer = new QTimer();
+    connect(enemyTimer, &QTimer::timeout, this, &Enemy::millisecond);
+    enemyTimer->start(50);
 }
 
 Enemy::~Enemy()

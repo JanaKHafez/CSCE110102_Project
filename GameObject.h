@@ -18,7 +18,8 @@ extern bool audio;
 class GameObject: public QObject, public QGraphicsPixmapItem{
 
 protected:
-    int health;
+    int player;
+    float health;
     int x;
     int y;
     int type;
@@ -30,9 +31,10 @@ public:
     GameObject();
     int getX();
     int getY();
+    int getPlayer();
     bool isBroken();
     bool isFixed();
-    bool damage(int amount);
+    bool damage(float amount);
     bool repair(int amount);
     virtual void breakObject();
     int getType();

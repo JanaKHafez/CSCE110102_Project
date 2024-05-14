@@ -3,6 +3,7 @@
         <file>gameTextFile.txt</file>
         <file>gameTextFile2.txt</file>
         <file>gameTextFile3.txt</file>
+        <file>MultiplayerMap.txt</file>
     </qresource>
     <qresource prefix="/images">
         <file>greenland.jpeg</file>
@@ -51,5 +52,14 @@
         <file>fence3.jpeg</file>
         <file>fence4.jpeg</file>
         <file>firebullet.jpeg</file>
+        <file>GameOverImage.jpg</file>
+        <file>playIcon1.tif</file>
+        <file>pauseIcon.tif</file>
+        <file>pauseIcon1.tif</file>
+        <file>pauseIcon2.tif</file>
+        <file>playIcon2.tif</file>
+        <file>pauseIcon.png</file>
+        <file>playIcon.png</file>
+        <file>exit.jpg</file>
     </qresource>
 </RCC>

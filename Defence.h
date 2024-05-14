@@ -11,6 +11,7 @@ Q_OBJECT
 protected:
     float aim;
     float power;
+    int player;
     QGraphicsLineItem* L;
     void rotateArrow();
     Game* game;
@@ -18,7 +19,7 @@ protected:
     QTimer* shootTimer;
 
 public:
-    Defence (int thisX, int thisY, Game* game);
+    Defence (int thisX, int thisY, Game* game, int player = 1);
     void DisplayArrow();
     virtual void shoot() = 0;
     virtual void DisplayPic() = 0;

@@ -7,7 +7,7 @@
 class Fence: public GameObject {
 
 public:
-    Fence(int thisX, int thisY);
+    Fence(int thisX, int thisY, int player = 1);
     ~Fence ();
 
 };

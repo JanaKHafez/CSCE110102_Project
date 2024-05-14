@@ -13,15 +13,16 @@ class Bullet: public QObject, public QGraphicsPixmapItem {
 protected:
     int aim;
     int power;
+    int player;
     Game* game;
     QTimer* moveTimer;
 
 public:
-    Bullet(int thisAim, Game* game, int power);
+    Bullet(int thisAim, Game* game, int power, int player = 1);
     virtual void specialEffect(Enemy* &enemy);
 
 public slots:
-    void move();
+    int move();
 
 };
 
