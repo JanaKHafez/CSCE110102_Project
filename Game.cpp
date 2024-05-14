@@ -89,8 +89,8 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     {
         goal = 0;
         enemyTime = 17500;
-        enemyCount = 2;
-        defenceType = 1;
+        enemyCount = 4;
+        defenceType = level;
         enemySpeed = 50;
         mapFile.setFileName(":/textFile/MultiplayerMap.txt");
     }
@@ -98,6 +98,8 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     winMsg = new QGraphicsTextItem(QString("You Win!!!"));
     loseMsg = new QGraphicsTextItem(QString("You Lose!"));
     scoreMsg = new QGraphicsTextItem(QString("Score: ") + QString::number(score));
+    addCitizenMsg1 = new QGraphicsTextItem(QString("++ Citizen Worker"));
+    addCitizenMsg2 = new QGraphicsTextItem(QString("++ Citizen Worker"));
     score2Msg = new QGraphicsTextItem(QString("Score: ") + QString::number(score2));
     powerUpMsg = new QGraphicsTextItem(QString("Power Up!"));
     countdownMsg = new QGraphicsTextItem(QString(""));
@@ -141,7 +143,15 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
 
     countdownMsg -> setFont(fontSmall);
     countdownMsg -> setDefaultTextColor(colorWhite);
-    countdownMsg -> setPos(10, 0);
+    countdownMsg -> setPos(10, 60);
+
+    addCitizenMsg1 -> setFont(fontSmall);
+    addCitizenMsg1 -> setDefaultTextColor(colorWhite);
+    addCitizenMsg1 -> setPos(10, 0);
+
+    addCitizenMsg2 -> setFont(fontSmall);
+    addCitizenMsg2 -> setDefaultTextColor(colorWhite);
+    addCitizenMsg2 -> setPos(10, 660);
 
     powerUpMsg -> setFont(fontBig);
     powerUpMsg -> setDefaultTextColor(colorWhite);
@@ -318,9 +328,6 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     playPic->setPixmap(scaledPixmapPlay);
     playPic->setPos(490, -140);
 
-    scene->addItem(audioPicON);
-    scene->addItem(pausePic);
-
     QGraphicsPixmapItem *restartPic = new QGraphicsPixmapItem();
     QPixmap restartPix = QPixmap(":/images/restartButton.png");
     QPixmap scaledPixmapRestart = restartPix.scaled(40, 40);
@@ -328,7 +335,17 @@ Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
     restartPic->setPos(740, 20);
     scene->addItem(restartPic);
 
-    if(level > 1) {QTimer::singleShot(5000, qApp, [this](){
+    QGraphicsPixmapItem* exitPic = new QGraphicsPixmapItem();
+    QPixmap exitPix = QPixmap(":/images/exit.jpg");
+    QPixmap scaledPixmapExit = exitPix.scaled(40, 40);
+    exitPic->setPixmap(scaledPixmapExit);
+    exitPic->setPos(680, 80);
+    scene->addItem(exitPic);
+
+    scene->addItem(audioPicON);
+    scene->addItem(pausePic);
+
+    if(mode == 1 && level > 1) {QTimer::singleShot(5000, qApp, [this](){
             freeze = false;
             scene -> removeItem(startMsg);
             startMsg -> setPlainText(QString("Level ") + QString::number(level) + "\n" + QString("Survive for ") + QString::number(goal*60) + QString(" seconds") + "\n" + QString("Press space to start"));
@@ -463,6 +480,13 @@ void Game::mousePressEvent(QMouseEvent* event)
         restart();
     }
 
+    else if(x >= 680 && x <= 720 && y >= 80 && y <= 120)
+    {
+        delete this;
+        MainWindow *mainWindow = new MainWindow();
+        mainWindow->show();
+    }
+
     else if(started && x >= 690 && x <= 710 && y >= 20 && y <= 55)
     {
         if(paused == false)
@@ -566,7 +590,8 @@ void Game::end()
 void Game::restart()
 {
     delete this;
-    game = new Game(1);
+    if(mode == 1) {game = new Game(1);}
+    else if(mode == 2) {game = new Game(level);}
     game->show();
     game->setFocus();
 }
@@ -728,6 +753,29 @@ void Game::defeatEnemy(Enemy* e, int p)
             defence->increasePower(50);
             QTimer::singleShot(2000, qApp, [this](){ scene->removeItem(powerUpMsg); });
         }
+
+        if(score != 0 && score%5 == 0 && mode == 2)
+        {
+            if(audio)
+            {
+                QMediaPlayer *powerUpMedia;
+                QAudioOutput *powerUpAudio;
+                powerUpAudio= new QAudioOutput();
+                powerUpAudio -> setVolume (100);
+                powerUpMedia = new QMediaPlayer ();
+                powerUpMedia->setAudioOutput(powerUpAudio);
+                powerUpMedia ->setSource(QUrl("qrc:/new/prefix1/powerUp.mp3"));
+                powerUpMedia ->play();
+            }
+
+            scene -> removeItem(addCitizenMsg1);
+            scene->addItem(addCitizenMsg1);
+            QTimer::singleShot(2000, qApp, [this](){ scene->removeItem(addCitizenMsg1); });
+
+            CitizenWorker* c = new CitizenWorker(260, 50, this, 1);
+            citizenWorkers.push_back(c);
+            scene->addItem(c);
+        }
     }
 
     if(p == 2)
@@ -737,6 +785,29 @@ void Game::defeatEnemy(Enemy* e, int p)
         scene->removeItem(score2Msg);
         score2Msg->setPlainText(QString("Score: ") + QString::number(score2));
         scene->addItem(score2Msg);
+
+        if(score2 != 0 && score2%5 == 0 && mode == 2)
+        {
+            if(audio)
+            {
+                QMediaPlayer *powerUpMedia;
+                QAudioOutput *powerUpAudio;
+                powerUpAudio= new QAudioOutput();
+                powerUpAudio -> setVolume (100);
+                powerUpMedia = new QMediaPlayer ();
+                powerUpMedia->setAudioOutput(powerUpAudio);
+                powerUpMedia ->setSource(QUrl("qrc:/new/prefix1/powerUp.mp3"));
+                powerUpMedia ->play();
+            }
+
+            scene -> removeItem(addCitizenMsg2);
+            scene->addItem(addCitizenMsg2);
+            QTimer::singleShot(2000, qApp, [this](){ scene->removeItem(addCitizenMsg2); });
+
+            CitizenWorker* c = new CitizenWorker(340, 700, this, 2);
+            citizenWorkers.push_back(c);
+            scene->addItem(c);
+        }
     }
 }
 

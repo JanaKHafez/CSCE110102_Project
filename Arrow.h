@@ -6,7 +6,7 @@
 class Arrow : public Bullet {
 
 public:
-    Arrow(int aim, Game* game, int power) : Bullet(aim, game, power) {}
+    Arrow(int aim, Game* game, int power, int player = 1) : Bullet(aim, game, power, player) {}
     void specialEffect(Enemy* &enemy);
 };
 

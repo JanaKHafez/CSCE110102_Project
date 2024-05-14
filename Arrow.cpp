@@ -2,6 +2,6 @@
 #include "Enemy.h"
 
 void Arrow::specialEffect(Enemy* &enemy) {
-    enemy->knockBack(aim);
+    enemy->knockBack(aim, player);
     delete this;
 }

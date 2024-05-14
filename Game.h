@@ -35,6 +35,8 @@ private:
     QGraphicsTextItem* score2Msg;
     QGraphicsTextItem* powerUpMsg;
     QGraphicsTextItem* countdownMsg;
+    QGraphicsTextItem* addCitizenMsg1;
+    QGraphicsTextItem* addCitizenMsg2;
     QGraphicsPixmapItem* audioPicON;
     QGraphicsPixmapItem* audioPicOFF;
     QGraphicsPixmapItem* pausePic;

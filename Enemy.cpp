@@ -160,27 +160,52 @@ bool Enemy::damageThis(float amount, int p)
     return false;
 }
 
-void Enemy::knockBack(int thisAngle)
+void Enemy::knockBack(int thisAngle, int thisPlayer)
 {
     angle = thisAngle;
     moveBackCounter = 0;
     knockbackStarted = true;
+    knockBackPlayer = thisPlayer;
     reached = false;
 }
 
 void Enemy::moveBack()
 {
-    moveBackCounter ++;
-    if(moveBackCounter * speed <= 1000)
+    for(int i = 0; i < game->map.size(); i++)
     {
-        x += stepSize * angle/20.0;
-        y += stepSize * abs((20-angle)/20.0);
-        setPos(x, y);
+        if(knockBackPlayer == 1 && game->map[i]->getY() > 400)
+        {
+            if(x <= game->map[i]->getX() + 50 && x +60 >= game->map[i]->getX() && y <= game->map[i]->getY() +50 && y +60 >= game->map[i]->getY())
+            {
+                knockbackStarted = false;
+                updateItem();
+            }
+        }
+        if(knockBackPlayer == 2 && game->map[i]->getY() < 400)
+        {
+            if(x <= game->map[i]->getX() + 50 && x +60 >= game->map[i]->getX() && y <= game->map[i]->getY() +50 && y +60 >= game->map[i]->getY())
+            {
+                knockbackStarted = false;
+                updateItem();
+            }
+        }
     }
-    else
+    if(knockbackStarted)
     {
-        knockbackStarted = false;
-        updateItem();
+        moveBackCounter ++;
+        if(moveBackCounter * speed <= 1000)
+        {
+            x += stepSize * angle/20.0;
+            if(knockBackPlayer == 1) {y += stepSize * abs((20-angle)/20.0);}
+            else if (knockBackPlayer == 2)
+            {y -= stepSize * abs((20-angle)/20.0);}
+            setPos(x, y);
+        }
+        else
+        {
+            knockbackStarted = false;
+            updateItem();
+        }
     }
 }
 

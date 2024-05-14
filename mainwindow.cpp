@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "Game.h"
+#include "multiplayerwindow.h"
 
 extern int mode;
 extern Game* game;
@@ -29,8 +30,7 @@ void MainWindow::on_pushButtonSinglePlayer_clicked()
 void MainWindow::on_pushButtonMultiplayer_clicked()
 {
     mode = 2;
-    game = new Game();
-    game->show();
-    game->setFocus();
+    MultiplayerWindow *multiplayerWindow = new MultiplayerWindow();
+    multiplayerWindow->show();
     this->hide();
 }

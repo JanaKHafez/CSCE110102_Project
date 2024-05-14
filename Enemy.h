@@ -12,6 +12,7 @@ private:
     int angle;
     int i=0;
     int time=0;
+    int knockBackPlayer;
     QTimer* enemyTimer;
     int moveBackCounter;
     bool animationStarted = false;
@@ -36,7 +37,7 @@ public:
     void pause();
     void play();
     bool damageThis(float amount, int player);
-    void knockBack(int angle);
+    void knockBack(int angle, int player);
     void move();
     GameObject* getNearest();
     void moveBack();

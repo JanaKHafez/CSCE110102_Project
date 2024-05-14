@@ -26,7 +26,7 @@ void WizardTower::shoot()
             delete shootTimer;
         }
 
-        Potion * potion = new Potion(aim, game, power);
+        Potion * potion = new Potion(aim, game, power, player);
         potion->setPos(x-2,y+8);
         scene()->addItem(potion);
         allowShoot = false;

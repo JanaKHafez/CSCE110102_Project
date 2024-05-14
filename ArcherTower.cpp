@@ -26,7 +26,7 @@ void ArcherTower::shoot()
             delete shootTimer;
         }
 
-        Arrow * arrow = new Arrow(aim, game, power);
+        Arrow * arrow = new Arrow(aim, game, power, player);
         arrow->setPos(x-2,y+8);
         scene()->addItem(arrow);
         allowShoot = false;

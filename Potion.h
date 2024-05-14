@@ -12,7 +12,7 @@ private:
     int count;
 
 public:
-    Potion(int aim, Game* game, int power) : Bullet(aim, game, power) {}
+    Potion(int aim, Game* game, int power, int player = 1) : Bullet(aim, game, power, player) {}
     void specialEffect(Enemy* &enemy);
 
 public slots:

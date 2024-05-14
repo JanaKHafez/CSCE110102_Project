@@ -26,7 +26,8 @@ SOURCES += \
     PowerUp.cpp \
     WizardTower.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    multiplayerwindow.cpp
 
 HEADERS += \
     ArcherTower.h \
@@ -44,10 +45,12 @@ HEADERS += \
     Potion.h \
     PowerUp.h \
     WizardTower.h \
-    mainwindow.h
+    mainwindow.h \
+    multiplayerwindow.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    multiplayerwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
