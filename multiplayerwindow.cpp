@@ -22,19 +22,19 @@ MultiplayerWindow::MultiplayerWindow(QWidget *parent)
     int horizontalMargin = (width() - (3 * 300)) / 2;
 
 
-    ui->labelCanonPic->resize(300, 300);
+    ui->labelCanonPic->resize(290, 300);
     ui->labelCanonPic->move(horizontalMargin, (height() - 300) / 2);
-    QPixmap pix = QPixmap(":/ui_Images/wallpaperflare.com_wallpaper (3).jpg").scaled(300, 300);
+    QPixmap pix = QPixmap(":/ui_Images/file (1).jpg").scaled(290, 300);
     ui->labelCanonPic->setPixmap(pix);
 
-    ui->labelArcherTowerPic->resize(300, 300);
+    ui->labelArcherTowerPic->resize(290, 300);
     ui->labelArcherTowerPic->move(horizontalMargin + 300, (height() - 300) / 2);
-    QPixmap pix2 = QPixmap(":/ui_Images/wallpaperflare.com_wallpaper (3).jpg").scaled(300, 300);
+    QPixmap pix2 = QPixmap(":/ui_Images/file.jpg").scaled(290, 300);
     ui->labelArcherTowerPic->setPixmap(pix2);
 
-    ui->labelWizardTowerPic->resize(300, 300);
+    ui->labelWizardTowerPic->resize(290, 300);
     ui->labelWizardTowerPic->move(horizontalMargin + 600, (height() - 300) / 2);
-    QPixmap pix3 = QPixmap(":/ui_Images/multiwall.jpeg").scaled(300, 300);
+    QPixmap pix3 = QPixmap(":/ui_Images/file (2).jpg").scaled(290, 300);
     ui->labelWizardTowerPic->setPixmap(pix3);
 
 
