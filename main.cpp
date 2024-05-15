@@ -8,10 +8,11 @@
 Game *game;
 
 bool audio = true;
+bool paused = false;
 int ClanCastle::castleCount = 0;
 int ClanCastle::castleCount2 = 0;
 
-int mode = 2;
+int mode;
 
 int main(int argc, char *argv[])
 {

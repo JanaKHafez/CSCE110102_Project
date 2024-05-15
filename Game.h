@@ -24,10 +24,12 @@ class CitizenWorker;
 class PowerUp;
 
 extern bool audio;
+extern bool paused;
 
 class Game: public QGraphicsView {
 
 private:
+    bool keyLeftPressed = false, keyRightPressed = false, keySpacePressed = false, keyUpPressed = false, keyAPressed = false, keyWPressed = false, keyDPressed = false;
     QGraphicsTextItem* startMsg;
     QGraphicsTextItem* loseMsg;
     QGraphicsTextItem* winMsg;
@@ -46,7 +48,6 @@ private:
     int arrayOfMapN[10][10];
     bool started = false;
     bool freeze = true;
-    bool paused = false;
     bool over = false;
     int score;
     int score2;
@@ -79,6 +80,7 @@ public:
     void pause();
     void play();
     void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
     void mousePressEvent(QMouseEvent* event);
     void generatePowerUp();
     void generateEnemy();

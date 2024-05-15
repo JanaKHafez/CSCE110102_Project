@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>440</y>
+     <y>300</y>
      <width>241</width>
      <height>31</height>
     </rect>
@@ -29,8 +29,8 @@
   <widget class="QPushButton" name="pushButtonArcherTower">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>440</y>
+     <x>360</x>
+     <y>300</y>
      <width>221</width>
      <height>31</height>
     </rect>
@@ -43,7 +43,7 @@
    <property name="geometry">
     <rect>
      <x>700</x>
-     <y>440</y>
+     <y>300</y>
      <width>211</width>
      <height>31</height>
     </rect>
@@ -55,14 +55,14 @@
   <widget class="QLabel" name="labelChooseWeapon">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>-30</x>
      <y>30</y>
-     <width>241</width>
-     <height>31</height>
+     <width>971</width>
+     <height>101</height>
     </rect>
    </property>
    <property name="text">
-    <string>                     Choose Weapon</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:48pt;&quot;&gt;Choose Weapon&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelCanonPic">
@@ -108,7 +108,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>-40</y>
      <width>971</width>
      <height>501</height>
     </rect>

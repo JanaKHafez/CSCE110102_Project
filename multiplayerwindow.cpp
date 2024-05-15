@@ -14,7 +14,7 @@ MultiplayerWindow::MultiplayerWindow(QWidget *parent)
     resize(900, 900);
 
 
-    QPixmap wallpaper = QPixmap(":/ui_Images/Supermago.jpeg").scaled(900, 900);
+    QPixmap wallpaper = QPixmap(":/ui_Images/background3.jpg").scaled(900, 900);
     ui->label->setPixmap(wallpaper);
     ui->label->resize(900, 900);
 
@@ -22,31 +22,31 @@ MultiplayerWindow::MultiplayerWindow(QWidget *parent)
     int horizontalMargin = (width() - (3 * 300)) / 2;
 
 
-    ui->labelCanonPic->resize(290, 300);
+    ui->labelCanonPic->resize(300, 300);
     ui->labelCanonPic->move(horizontalMargin, (height() - 300) / 2);
-    QPixmap pix = QPixmap(":/ui_Images/file (1).jpg").scaled(290, 300);
+    QPixmap pix = QPixmap(":/images/TOWER1.png").scaled(300, 300);
     ui->labelCanonPic->setPixmap(pix);
 
-    ui->labelArcherTowerPic->resize(290, 300);
+    ui->labelArcherTowerPic->resize(300, 300);
     ui->labelArcherTowerPic->move(horizontalMargin + 300, (height() - 300) / 2);
-    QPixmap pix2 = QPixmap(":/ui_Images/file.jpg").scaled(290, 300);
+    QPixmap pix2 = QPixmap(":/images/TOWER3.png").scaled(300, 300);
     ui->labelArcherTowerPic->setPixmap(pix2);
 
-    ui->labelWizardTowerPic->resize(290, 300);
+    ui->labelWizardTowerPic->resize(300, 300);
     ui->labelWizardTowerPic->move(horizontalMargin + 600, (height() - 300) / 2);
-    QPixmap pix3 = QPixmap(":/ui_Images/file (2).jpg").scaled(290, 300);
+    QPixmap pix3 = QPixmap(":/images/TOWER2.png").scaled(300, 300);
     ui->labelWizardTowerPic->setPixmap(pix3);
 
 
-    int buttonWidth = 300;
+    int buttonWidth = 250;
     int buttonHeight = 50;
     int buttonX = (width() - (3 * buttonWidth)) / 2;
-    int buttonY = height() - buttonHeight - 100;
+    int buttonY = height() - buttonHeight - 200;
 
 
-    ui->pushButtonCanon->setGeometry(buttonX, buttonY, buttonWidth, buttonHeight);
+    ui->pushButtonCanon->setGeometry(buttonX-50, buttonY, buttonWidth, buttonHeight);
     ui->pushButtonArcherTower->setGeometry(buttonX + buttonWidth + 10, buttonY, buttonWidth, buttonHeight);
-    ui->pushButtonWizardTower->setGeometry(buttonX + 2 * (buttonWidth + 10), buttonY, buttonWidth, buttonHeight);
+    ui->pushButtonWizardTower->setGeometry(buttonX + 2 * (buttonWidth + 10) + 50, buttonY, buttonWidth, buttonHeight);
 }
 
 MultiplayerWindow::~MultiplayerWindow()

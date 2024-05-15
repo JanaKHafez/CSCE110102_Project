@@ -28,6 +28,7 @@ extern int mode;
 
 Game::Game(int thisLevel, QWidget* parent) : QGraphicsView(parent) {
 
+    paused = false;
     powerUp = nullptr;
     score = 0;
     score2 = 0;
@@ -410,15 +411,15 @@ void Game::keyPressEvent(QKeyEvent* event)
             {
                 if(event->key()== Qt::Key_Left)
                 {
-                    defence->aimLeft();
+                    keyLeftPressed = true;
                 }
-                else if(event->key()== Qt::Key_Right)
+                if(event->key()== Qt::Key_Right)
                 {
-                    defence->aimRight();
+                    keyRightPressed = true;
                 }
-                else if(event->key()== Qt::Key_Space)
+                if(event->key()== Qt::Key_Space)
                 {
-                    defence->shoot();
+                    keySpacePressed = true;
                 }
             }
 
@@ -426,29 +427,88 @@ void Game::keyPressEvent(QKeyEvent* event)
             {
                 if(event->key()== Qt::Key_Left)
                 {
-                    defence->aimLeft();
+                    keyLeftPressed = true;
                 }
                 if(event->key()== Qt::Key_Right)
                 {
-                    defence->aimRight();
+                    keyRightPressed = true;
                 }
                 if(event->key()== Qt::Key_Up)
                 {
-                    defence->shoot();
+                    keyUpPressed = true;
                 }
-                if(event->key() == Qt::Key_A)
+                if(event->key() == Qt::Key_A && !(keyWPressed && keyDPressed))
                 {
-                    defence2->aimLeft();
+                    keyAPressed = true;
                 }
-                if(event->key() == Qt::Key_D)
+                if(event->key() == Qt::Key_D && !(keyAPressed && keyWPressed))
                 {
-                    defence2->aimRight();
+                    keyDPressed = true;
                 }
-                if(event->key() == Qt::Key_W)
+                if(event->key() == Qt::Key_W && !(keyAPressed && keyDPressed))
                 {
-                    defence2->shoot();
+                    keyWPressed = true;
                 }
             }
+        }
+    }
+    
+    //for presentation
+
+    if(event->key() == Qt::Key_F1)
+    {
+        nextLevel();
+    }
+    else if(event->key() == Qt::Key_F2)
+    {
+        level -= 2;
+        nextLevel();
+    }
+}
+
+void Game::keyReleaseEvent(QKeyEvent* event)
+{
+    if(mode == 1)
+    {
+        if(event->key()== Qt::Key_Left)
+        {
+            keyLeftPressed = false;
+        }
+        if(event->key()== Qt::Key_Right)
+        {
+            keyRightPressed = false;
+        }
+        if(event->key()== Qt::Key_Space)
+        {
+            keySpacePressed = false;
+        }
+    }
+
+    if(mode == 2)
+    {
+        if(event->key()== Qt::Key_Left)
+        {
+            keyLeftPressed = false;
+        }
+        if(event->key()== Qt::Key_Right)
+        {
+            keyRightPressed = false;
+        }
+        if(event->key()== Qt::Key_Up)
+        {
+            keyUpPressed = false;
+        }
+        if(event->key() == Qt::Key_A)
+        {
+            keyAPressed = false;
+        }
+        if(event->key() == Qt::Key_D)
+        {
+            keyDPressed = false;
+        }
+        if(event->key() == Qt::Key_W)
+        {
+            keyWPressed = false;
         }
     }
 }
@@ -487,7 +547,7 @@ void Game::mousePressEvent(QMouseEvent* event)
         mainWindow->show();
     }
 
-    else if(started && x >= 690 && x <= 710 && y >= 20 && y <= 55)
+    else if(!over && started && x >= 690 && x <= 710 && y >= 20 && y <= 55)
     {
         if(paused == false)
         {
@@ -526,6 +586,19 @@ void Game::millisecond()
 
     if(mode == 1)
     {
+        if(keyLeftPressed & !keyRightPressed)
+        {
+            defence->aimLeft();
+        }
+        if(keyRightPressed & !keyLeftPressed)
+        {
+            defence->aimRight();
+        }
+        if(keySpacePressed)
+        {
+            defence->shoot();
+        }
+
         if(time%1000 == 0)
         {
             int min;
@@ -560,6 +633,31 @@ void Game::millisecond()
 
     else if(mode == 2)
     {
+        if(keyLeftPressed & !keyRightPressed)
+        {
+            defence->aimLeft();
+        }
+        if(keyRightPressed & !keyLeftPressed)
+        {
+            defence->aimRight();
+        }
+        if(keyUpPressed)
+        {
+            defence->shoot();
+        }
+        if(keyAPressed & !keyDPressed)
+        {
+            defence2->aimLeft();
+        }
+        if(keyDPressed & !keyAPressed)
+        {
+            defence2->aimRight();
+        }
+        if(keyWPressed)
+        {
+            defence2->shoot();
+        }
+
         if(time % enemyTime == 0)
         {
             generateEnemy();
@@ -589,9 +687,9 @@ void Game::end()
 
 void Game::restart()
 {
-    delete this;
     if(mode == 1) {game = new Game(1);}
     else if(mode == 2) {game = new Game(level);}
+    delete this;
     game->show();
     game->setFocus();
 }
