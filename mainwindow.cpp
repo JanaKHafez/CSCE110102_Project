@@ -11,6 +11,14 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QPixmap pix = QPixmap(":/ui_Images/wallpaperflare.com_wallpaper (3).jpg");
+    pix=pix.scaled(width(),height());
+    ui->label->setPixmap(pix);
+    QPixmap pix2 = QPixmap(":/ui_Images/multiwall.jpeg");
+    QPixmap pix3 = QPixmap(":/ui_Images/Supermago.jpeg");
+    //ui->singleLabel->setPixmap(pix3);
+
+
 }
 
 MainWindow::~MainWindow()

@@ -62,4 +62,9 @@
         <file>playIcon.png</file>
         <file>exit.jpg</file>
     </qresource>
+    <qresource prefix="/ui_Images">
+        <file>wallpaperflare.com_wallpaper (3).jpg</file>
+        <file>Supermago.jpeg</file>
+        <file>multiwall.jpeg</file>
+    </qresource>
 </RCC>
