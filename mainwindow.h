@@ -23,5 +23,6 @@ private:
 private slots:
     void on_pushButtonSinglePlayer_clicked();
     void on_pushButtonMultiplayer_clicked();
+    void on_pushButton_getHelp_clicked();
 };
 #endif // MAINWINDOW_H

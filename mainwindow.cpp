@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "Game.h"
 #include "multiplayerwindow.h"
+#include "helpwindow.h"
 
 extern int mode;
 extern Game* game;
@@ -42,3 +43,11 @@ void MainWindow::on_pushButtonMultiplayer_clicked()
     multiplayerWindow->show();
     this->hide();
 }
+
+void MainWindow::on_pushButton_getHelp_clicked()
+{
+    helpWindow *helpWindow= new class helpWindow ();
+    helpWindow ->show();
+    this->hide();
+}
+

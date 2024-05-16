@@ -25,6 +25,7 @@ SOURCES += \
     Potion.cpp \
     PowerUp.cpp \
     WizardTower.cpp \
+    helpwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     multiplayerwindow.cpp
@@ -45,10 +46,12 @@ HEADERS += \
     Potion.h \
     PowerUp.h \
     WizardTower.h \
+    helpwindow.h \
     mainwindow.h \
     multiplayerwindow.h
 
 FORMS += \
+    helpwindow.ui \
     mainwindow.ui \
     multiplayerwindow.ui
 

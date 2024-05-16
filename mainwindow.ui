@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>360</y>
+      <y>350</y>
       <width>371</width>
       <height>61</height>
      </rect>
@@ -31,7 +31,7 @@
     <property name="geometry">
      <rect>
       <x>450</x>
-      <y>360</y>
+      <y>350</y>
       <width>391</width>
       <height>61</height>
      </rect>
@@ -53,9 +53,23 @@
      <string/>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_getHelp">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>420</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Get Help?</string>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>pushButtonSinglePlayer</zorder>
    <zorder>pushButtonMultiplayer</zorder>
+   <zorder>pushButton_getHelp</zorder>
   </widget>
  </widget>
  <resources/>

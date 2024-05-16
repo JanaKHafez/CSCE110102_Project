@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>helpWindow</class>
+ <widget class="QDialog" name="helpWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QLabel" name="label_defence">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>30</y>
+     <width>501</width>
+     <height>111</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#aa007f;&quot;&gt;Know your defences :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;1. Canon: damages enemy&lt;/p&gt;&lt;p&gt;2. ⁠Archer tower: knocks back enemy&lt;/p&gt;&lt;p&gt;3. ⁠ Wizard tower: damages enemy and keeps damaging enemy for 3 seconds&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_singlePlayerMode">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>140</y>
+     <width>721</width>
+     <height>191</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; font-style:italic; color:#00007f;&quot;&gt;Single player mode:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;1. You will  have 5 levels, each level increase in difficulty &lt;/p&gt;&lt;p&gt;2. You ⁠aim using right and left arrow keys, shoot using space&lt;/p&gt;&lt;p&gt;3. ⁠Your goal is to survive for the time given at every level without time getting your castle destroyed&lt;/p&gt;&lt;p&gt;4. ⁠The enemies damage all structures&lt;/p&gt;&lt;p&gt;5.⁠Citizen workers are your little helpers. they fix enemy damage but ⁠enemies kill citizen workers when they collide with them :(&lt;/p&gt;&lt;p&gt;6. You will find ⁠power up boosters when 10 enemies are killed or when you hit a blue arrow power up that shows up on the screen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_multiPlayerMode">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>360</y>
+     <width>571</width>
+     <height>132</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700; color:#00007f;&quot;&gt;Multiplayer mode&lt;/span&gt;&lt;/p&gt;&lt;p&gt;1. Player 1 has the top clan, aims by using right and left keys, and shoots using up key.&lt;/p&gt;&lt;p&gt;2. ⁠Player 2 has the bottom clan, aims by using 'A' and  'D' keys, and shoots using 'W' key.&lt;/p&gt;&lt;p&gt;3. A player wins when the other player’s castles are destroyed.&lt;/p&gt;&lt;p&gt;4. Your role id to ⁠shoot enemies attacking your clan and ⁠shoot at the other player’s clan as well.&lt;/p&gt;&lt;p&gt;6. ⁠For each 5 enemies killed you get a bonus citizen worker.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonBackHelpWindow">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>510</y>
+     <width>131</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Back</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
